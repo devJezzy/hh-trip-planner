@@ -1,7 +1,7 @@
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold, Part } from "@google/generative-ai";
 
-// const apiKey = "AIzaSyD8gfH9jWohxyvHTcT_Clgp4xHjVBbJlJ0";
-const apiKey = "";
+const apiKey = "AIzaSyD8gfH9jWohxyvHTcT_Clgp4xHjVBbJlJ0";
+// const apiKey = "";
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const model = genAI.getGenerativeModel({
@@ -60,7 +60,7 @@ sample json response:
 
 
 
-export default async function getResponse(): Promise<string> {
+export default async function getResponse(query: string): Promise<string> {
     const chatSession = await model.startChat({
       generationConfig,
       history: [
@@ -75,7 +75,7 @@ export default async function getResponse(): Promise<string> {
       ],
     });
 
-    const result = await chatSession.sendMessage("Relaxation trip to Chennai for 2 days");
+    const result = await chatSession.sendMessage(query);
     const match = result.response.text().match(/```json([\s\S]*?)```/);
 
     if (match && match[1]) {

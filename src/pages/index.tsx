@@ -1,367 +1,451 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import HotelCard from "../components/HotelProp";
-import TourCard from "../components/TourPro";
-import ItineraryItem from "../components/ItenaryItem";
-import searchImages from "../utils/getImage";
-import { GetPlanProps } from "@/context/PlanContext";
-import Footer from "@/components/Footer";
-import getResponse from "@/utils/gemini";
+import router from "next/router";
+import React, { FormEvent } from "react";
 
-interface Activities {
-  Time: string;
-  Activity: string;
-  Comments: string;
-  Type: string;
-}
-
-interface DayItinerary {
-  Day: string;
-  Itinerary: Activities[];
-}
-
-interface TransformedItineraryItem {
-  time: string;
+type TripCardProps = {
+  imageSrc: string;
   title: string;
-  description: string;
-  imageSrc?: string;
-  iconSrc: string;
-}
-
-interface TransformedItineraryDay {
-  day: string;
-  items: TransformedItineraryItem[];
-}
-
-const iconSrcMapping: Record<string, string> = {
-  FOOD: "https://cdn.builder.io/api/v1/image/assets/TEMP/4288ded5db6f47d2bfd9a43b489b2d0eef26d4b672ddc214ecb84fe53846545e?apiKey=79050f2e54364c9b998b189296d8e734&",
-  FINDHOTEL:
-    "https://cdn.builder.io/api/v1/image/assets/TEMP/3ee04e66e3e8f5b9516ca4a5515218209a659dad7ab8a9f46dd3d327329e9924?apiKey=79050f2e54364c9b998b189296d8e734&",
-  default:
-    "https://cdn.builder.io/api/v1/image/assets/TEMP/0b24e4c715f5af249791ce7936a6b94aee43a6dafcaa3b2348285d4ebf61ab25?apiKey=79050f2e54364c9b998b189296d8e734&",
+  days: number;
+  location: string;
 };
 
+const TripCard: React.FC<TripCardProps> = ({
+  imageSrc,
+  title,
+  days,
+  location,
+}) => (
+  <article className="flex flex-col grow justify-center text-sm text-black text-opacity-90">
+    <div className="flex flex-col py-px bg-white rounded-lg border border-solid border-zinc-100">
+      <img
+        loading="lazy"
+        src={imageSrc}
+        alt={`Trip to ${location}`}
+        className="mx-6 w-full aspect-[1.43] max-w-[230px] max-md:mx-2.5"
+      />
+      <div className="flex flex-col px-4 py-3 rounded-none">
+        <h3 className="justify-center leading-6">{title}</h3>
+        <div className="flex flex-wrap gap-1 pt-2 leading-[143%]">
+          <span className="justify-center px-2.5 py-px rounded-full border border-solid bg-neutral-200">
+            {days} days
+          </span>
+          <span className="justify-center px-2.5 py-px rounded-full border border-solid bg-neutral-200">
+            {location}
+          </span>
+        </div>
+      </div>
+    </div>
+  </article>
+);
+
+type TripGridProps = {
+  trips: TripCardProps[];
+};
+
+const TripGrid: React.FC<TripGridProps> = ({ trips }) => (
+  <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+    {trips.map((trip, index) => (
+      <div
+        key={index}
+        className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full"
+      >
+        <TripCard {...trip} />
+      </div>
+    ))}
+  </div>
+);
+
 const MyComponent: React.FC = () => {
-  const default_data = [
+  const recentTrips = [
     {
-      day: "Day 1 - Marina Beach Area",
-      items: [
-        {
-          time: "Bedtime",
-          title: "Find hotels in Chennai",
-          description:
-            "Choose from a range of hotels for a restful night's sleep by the seaside.",
-          iconSrc:
-            "https://cdn.builder.io/api/v1/image/assets/TEMP/3ee04e98b189296d8e734&",
-          imageSrc: "",
-        },
-      ],
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/93274267ab974b5b9ef4d542986a483b3184a41c182b94a37c8d71d3052666d7?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "4-Day Family-Friendly Trip in South Africa 🌴",
+      days: 4,
+      location: "South Africa",
     },
     {
-      day: "Day 2 - Central Chennai",
-      items: [
-        {
-          time: "Bedtime",
-          title: "Find hotels in Chennai",
-          description:
-            "After a day of exploration, relax in a comfortable hotel in the heart of the city.",
-          iconSrc:
-            "https://cdn.builder.io/api/v1/image/assets/TEMP/70fe09064c9b998b189296d8e734&",
-          imageSrc: "",
-        },
-      ],
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/b81df1da20543a78fb2ef4a3c5130c86d85950194a6c37933a2f2384825d98e4?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "5-Day Family-Friendly Trip to Egypt",
+      days: 5,
+      location: "Egypt",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/5e2f2dd811056609309724ab29df5d2e82d7470cff50a3198cd4b8dfba03eb66?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "5-Day Romantic Getaway in Cusco",
+      days: 5,
+      location: "Cusco",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/53730ee5578feb02c9b999fa6d7b9279adca979f144fbac8a898cb9c71f342f7?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "3-Day Relaxing Trip to Jaffa",
+      days: 3,
+      location: "Jaffa",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/62fbf7a79a7ecde95ae2a44852f19d6d22f288d0a56188e18fbd072d2eb2663a?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "4 Days in Family-Friendly Zimbabwe",
+      days: 4,
+      location: "Zimbabwe",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/9b42d1fd0222b81307b67fb6b0f57b01b3a54df93fd87f69a6ede04349940641?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "5-Day Relaxation Trip in Poland",
+      days: 5,
+      location: "Poland",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/1dd563a5511c8e7b87e90935cefe2f3c333563268b25ca4804cd4bb49782adaa?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "4-Day Relaxation Trip in Miami",
+      days: 4,
+      location: "Miami",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/f13afc401a1e0e8a46ad2f01aa2225bea6390a82e168eb0c86158058a625e9d7?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "Family-Friendly Bangalore Urban Itinerary for 3 Days",
+      days: 3,
+      location: "Bangalore Urban",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/8ba8ce64f415cd75a50ddd5414ab06a36e401a861654089e03bdd2ea15168a5a?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "2-Day Family-Friendly Trip in Bangalore Urban",
+      days: 2,
+      location: "Bangalore Urban",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/932ee4ca3f2d1efcd2ade1d967493476a9387ded5af0cc658c8bb49f0c4c2bb1?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "Family-Friendly Bangalore Urban Trip in 1 Day",
+      days: 1,
+      location: "Bangalore Urban",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/c0b1bc44ceda5a9ad306814b7956eae9d0d5d4259540b5fc16d034f18adddddb?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "One day in Family-Friendly Bangalore Urban",
+      days: 1,
+      location: "Bangalore Urban",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/64b08909bfbbf4e04038c3e107f81c0549bdeed9c05556c316c9329d9a7d3755?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "1 Day Trip to Manilla with Family-Friendly Activities",
+      days: 1,
+      location: "Manilla",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/6b4f0c507ab98a4fa54c3392eeb8e3525571a6c4fbe9e482915ff9c7b43e5d9d?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "2-Day Family-Friendly Trip to Manilla 🌴",
+      days: 2,
+      location: "Manilla",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/6b4f0c507ab98a4fa54c3392eeb8e3525571a6c4fbe9e482915ff9c7b43e5d9d?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "3-Day Family-Friendly Trip to Manilla",
+      days: 3,
+      location: "Manilla",
+    },
+    {
+      imageSrc:
+        "https://cdn.builder.io/api/v1/image/assets/TEMP/6b4f0c507ab98a4fa54c3392eeb8e3525571a6c4fbe9e482915ff9c7b43e5d9d?apiKey=79050f2e54364c9b998b189296d8e734&",
+      title: "4 Days of Relaxation in Manilla",
+      days: 4,
+      location: "Manilla",
     },
   ];
 
-  const [itineraryData, SetitIneraryData] = useState(default_data);
-
-  async function main() {
-    try {
-      const response = await getResponse();
-      console.log(response);
-      const itineraryData: DayItinerary[] = JSON.parse(response);
-      const transformedData = await transformItinerary(itineraryData);
-      console.log(transformedData);
-      console.log("transformedData");
-      SetitIneraryData(transformedData);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  function getTourPlan() {
-    return (
-      <>
-        {itineraryData.map((day, index) => (
-          <div className="flex flex-col max-md:max-w-full" key={index}>
-            <h3 className="justify-center text-2xl font-semibold leading-6 text-black max-md:max-w-full">
-              {day.day}
-            </h3>
-            <div className="flex flex-col mt-6 max-md:max-w-full">
-              {day.items.map((item, idx) => (
-                <ItineraryItem
-                  key={idx}
-                  time={item.time}
-                  title={item.title}
-                  description={item.description}
-                  iconSrc={item.iconSrc}
-                  imageSrc={item.imageSrc}
-                />
-              ))}
-              <div className="flex flex-col justify-end py-20">
-                <div className="flex flex-col justify-end pt-2">
-                  <button className="flex gap-0 justify-center px-3 py-2 bg-purple-600 rounded-lg max-w-[174px]">
-                    <span className="text-sm font-bold leading-5 text-center text-white">
-                      Find hotels
-                    </span>
-                    <div className="flex flex-col justify-center pl-2 my-auto">
-                      <div className="flex flex-col justify-center items-start">
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/ff31f66c00e1defcc6792f3ca357d4328bb54939b69974e10792137c440c0283?apiKey=79050f2e54364c9b998b189296d8e734&"
-                          alt=""
-                          className="w-3.5 aspect-square"
-                        />
-                      </div>
-                    </div>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </>
-    );
-  }
-
-  const getOtherTourPlan = () => {
-    return (
-      <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-        {OtherTourPlan.map((tour, index) => (
-          <TourCard
-            key={index}
-            imageSrc={tour.imageSrc}
-            name={tour.name}
-            description={tour.description}
-            duration={tour.duration}
-            location={tour.location}
-          />
-        ))}
-      </div>
-    );
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data: Record<string, string> = {};
+    formData.forEach((value, key) => {
+      data[key] = value as string;
+    });
+    console.log("Form data:", data);
+    router.push({
+      pathname: '/home',
+      query: data
+    });
   };
 
-  async function transformItinerary(
-    originalData: DayItinerary[]
-  ): Promise<TransformedItineraryDay[]> {
-    return Promise.all(
-      originalData.map(async (dayData) => {
-        const transformedItems: TransformedItineraryItem[] = await Promise.all(
-          dayData.Itinerary.map(async (item: Activities) => {
-            const { Time, Activity, Comments, Type } = item;
-            const iconSrc = iconSrcMapping[Type] || iconSrcMapping.default;
-
-            try {
-              const result = await searchImages(Activity);
-              const imageSrc = result[0]?.largeImageURL || "";
-
-              return {
-                time: Time,
-                title: Activity,
-                description: Comments,
-                imageSrc,
-                iconSrc,
-              };
-            } catch (error) {
-              console.error(
-                `Error fetching image for activity ${Activity}:`,
-                error
-              );
-              return {
-                time: Time,
-                title: Activity,
-                description: Comments,
-                imageSrc: "",
-                iconSrc,
-              };
-            }
-          })
-        );
-
-        return {
-          day: dayData.Day,
-          items: transformedItems,
-        };
-      })
-    );
-  }
-
-  useEffect(() => {
-    main();
-  }, []);
-
-  const { hotels } = GetPlanProps();
-  const { tours } = GetPlanProps();
-  const { OtherTourPlan } = GetPlanProps();
-
   return (
-    <div className="flex flex-col justify-center bg-[linear-gradient(0deg,#FFF_0%,#FFF_100%,#FFF)]">
-      <div className="flex flex-col w-full max-md:max-w-full">
-        <div className="flex flex-col self-center max-w-full w-[900px]">
-          <header className="flex flex-col justify-center px-4 max-md:max-w-full">
-            <div className="flex flex-col max-w-[900px] max-md:max-w-full">
-              <nav className="flex z-10 flex-col pt-8 w-[46px]">
-                <div className="flex flex-col justify-center">
-                  <div className="flex flex-col justify-center p-3.5 rounded-xl">
-                    <div className="flex flex-col justify-center">
-                      <div className="flex justify-center items-center">
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/2eef449fac01638cd2827539ac2ec782fe147ac92b8f938332799b14b388ddfa?apiKey=79050f2e54364c9b998b189296d8e734&"
-                          alt=""
-                          className="aspect-square w-[18px]"
-                        />
+    <div className="flex flex-col">
+      <header className="flex flex-col self-center pb-5 max-w-full w-[900px]">
+        <div className="flex flex-col justify-center px-4 max-md:max-w-full">
+          <div className="flex flex-col pt-12 max-w-[900px] max-md:max-w-full">
+            <h1 className="flex flex-col justify-center pt-10 text-6xl tracking-tighter text-black leading-[67.2px] max-md:max-w-full max-md:text-4xl">
+              <span className="pb-2 max-md:max-w-full max-md:text-4xl">
+                AI Trip Planner 🌴
+              </span>
+            </h1>
+            <p className="justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full">
+              Plan your dream trip with personalized itineraries.
+            </p>
+          </div>
+        </div>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col px-4 pt-10 pb-2 mt-5 max-md:pr-5 max-md:max-w-full"
+        >
+          <div className="flex flex-col max-md:max-w-full">
+            <div className="flex-wrap max-md:max-w-full">
+              <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+                <div className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full">
+                  <div className="flex flex-col grow justify-center self-stretch py-2">
+                    <div className="flex flex-col pb-7">
+                      <label
+                        htmlFor="travelDays"
+                        className="justify-center text-base leading-6 text-black"
+                      >
+                        Travel days
+                      </label>
+                      <div className="flex gap-2 justify-center mt-2 bg-white rounded-xl border border-solid border-neutral-300 justify-center items-start py-5 px-5 text-gray-400">
+                        <select
+                          id="travelDays"
+                          name="travelDays"
+                          className="flex-1 justify-center my-auto text-base"
+                        >
+                          <option value="" disabled selected>
+                            Travel days
+                          </option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                        </select>
                       </div>
                     </div>
                   </div>
                 </div>
-              </nav>
-              <h1 className="flex flex-col justify-center pt-10 text-6xl tracking-tighter text-black leading-[67.2px] max-md:max-w-full max-md:text-4xl">
-                <div className="pb-2 max-md:max-w-full max-md:text-4xl">
-                  AI Trip Planner 🌴
-                </div>
-              </h1>
-              <p className="justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full">
-                Plan your dream trip with personalized itineraries.
-              </p>
-            </div>
-          </header>
-          <main className="flex flex-col justify-center mt-5 max-md:max-w-full">
-            <section className="flex flex-col pb-12 max-w-[900px] max-md:max-w-full">
-              <div className="flex flex-col flex-wrap justify-center max-md:max-w-full">
-                <div className="flex flex-col px-4 max-md:max-w-full">
-                  <div className="flex flex-col text-base leading-6 text-black max-md:max-w-full">
-                    <div className="flex flex-wrap gap-2 items-start pr-20 pb-4 max-md:pr-5">
-                      <div className="flex flex-col justify-center px-2 rounded-full bg-neutral-100 max-w-[300px]">
-                        <div className="flex flex-col justify-center">
-                          <div className="justify-center">2 days</div>
-                        </div>
-                      </div>
-                      <div className="flex flex-col justify-center px-2 whitespace-nowrap rounded-full bg-neutral-100 max-w-[300px]">
-                        <div className="flex flex-col justify-center">
-                          <div className="justify-center">Chennai</div>
-                        </div>
-                      </div>
-                      <div className="flex flex-col justify-center px-2 whitespace-nowrap rounded-full bg-neutral-100 max-w-[300px]">
-                        <div className="flex flex-col justify-center">
-                          <div className="justify-center">Relaxation</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col justify-center items-end pr-2 pl-16 whitespace-nowrap max-md:pl-5 max-md:max-w-full">
-                      <div className="flex gap-0">
-                        <button className="flex gap-1 p-2">
-                          <img
-                            loading="lazy"
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/9c2953f06d09310f1f0cd7b6b31de8408f7c1d4ae5059ed2942bf06730fc5a98?apiKey=79050f2e54364c9b998b189296d8e734&"
-                            alt=""
-                            className="shrink-0 my-auto w-5 aspect-square"
+                <div className="flex flex-col ml-5 w-[33%] max-md:ml-0 max-md:w-full">
+                  <div className="flex flex-col grow justify-center self-stretch py-2">
+                    <div className="flex flex-col pb-7">
+                      <label
+                        htmlFor="destination"
+                        className="justify-center text-base leading-6 text-black whitespace-nowrap"
+                      >
+                        Destination
+                      </label>
+                      <div className="flex flex-col justify-center mt-2">
+                        <div className="flex gap-2.5 justify-center pl-6 rounded-xl border border-solid bg-white bg-opacity-80 border-neutral-300 max-md:pl-5">
+                          <input
+                            id="destination"
+                            name="destination"
+                            type="text"
+                            className="flex-1 justify-center my-auto text-base text-gray-400 whitespace-nowrap"
+                            placeholder="Destination"
                           />
-                          <span className="justify-center">Rerun</span>
-                        </button>
-                        <button className="flex gap-1 p-2">
-                          <img
-                            loading="lazy"
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/e29da78e6ae7fbeec60057c47cbc17214585ea0f186a04a0b9d68c36070a878f?apiKey=79050f2e54364c9b998b189296d8e734&"
-                            alt=""
-                            className="shrink-0 my-auto w-5 aspect-square"
-                          />
-                          <span className="justify-center">Copy</span>
-                        </button>
-                        <button className="flex gap-1 p-2">
-                          <img
-                            loading="lazy"
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/a91dab119bd3fd53970a668e7bcce8d400a8c93d7202f8a1f247ac1ae1fc79c5?apiKey=79050f2e54364c9b998b189296d8e734&"
-                            alt=""
-                            className="shrink-0 w-6 aspect-square"
-                          />
-                          <span className="justify-center">Save</span>
-                        </button>
-                        <button className="flex gap-1 p-2">
-                          <img
-                            loading="lazy"
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/67cdd1d5149a97aa3277254c786555524f850418eea1b1fbe6383d8ad11f324e?apiKey=79050f2e54364c9b998b189296d8e734&"
-                            alt=""
-                            className="shrink-0 my-auto w-5 aspect-square"
-                          />
-                          <span className="justify-center">Share</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <article className="flex flex-col justify-center p-px bg-white rounded-2xl border border border-solid max-w-[1916px] max-md:max-w-full">
-                    <div className="flex flex-col justify-center pb-12 max-md:max-w-full">
-                      <div className="flex flex-col max-md:max-w-full">
-                        <div className="flex flex-col justify-center text-4xl font-bold text-center text-white leading-[60px] max-md:max-w-full">
-                          <div className="flex overflow-hidden relative flex-col justify-center w-full min-h-[320px] max-md:max-w-full">
+                          <div className="flex flex-col justify-center items-start py-5 pr-4">
                             <img
                               loading="lazy"
-                              src="https://cdn.builder.io/api/v1/image/assets/TEMP/3d6073c01f85c38e08281dd37c62770ee08d558bf871f25852991c076c601017?apiKey=79050f2e54364c9b998b189296d8e734&"
-                              alt="Chennai cityscape"
-                              className="object-cover absolute inset-0 size-full"
+                              src="https://cdn.builder.io/api/v1/image/assets/TEMP/3d649a3995632fdd108f4b21e76131a061ff3412665eb25e0cd457fec67a57ac?apiKey=79050f2e54364c9b998b189296d8e734&"
+                              alt=""
+                              className="w-4 aspect-square"
                             />
-                            <div className="flex relative justify-center items-center px-16 py-20 bg-black bg-opacity-20 max-md:px-5 max-md:max-w-full">
-                              <h2 className="justify-center px-9 py-2 mt-2 mb-4 max-w-full rounded-xl w-[500px] max-md:px-5 max-md:max-w-full">
-                                2-Day Relaxation Trip to <br /> Chennai
-                              </h2>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex flex-col max-md:max-w-full">
-                          <div className="flex flex-col px-4 pt-4 pb-7 max-md:max-w-full">
-                            {getTourPlan()}
                           </div>
                         </div>
                       </div>
                     </div>
-                    <section className="flex flex-col justify-center px-4 mt-2 text-2xl leading-8 text-black max-md:max-w-full">
-                      <h3 className="pt-4 pb-1.5 max-md:max-w-full">
-                        Recommended Hotels
-                      </h3>
-                    </section>
-                    <div className="flex overflow-x-auto gap-5 justify-end py-4 pl-4 mt-2 max-md:flex-wrap">
-                      {hotels.map((hotel, index) => (
-                        <HotelCard key={index} {...hotel} />
-                      ))}
+                  </div>
+                </div>
+                <div className="flex flex-col ml-5 w-[33%] max-md:ml-0 max-md:w-full">
+                  <div className="flex flex-col grow justify-center self-stretch py-2">
+                    <div className="flex flex-col pb-7">
+                      <label
+                        htmlFor="travelStyle"
+                        className="justify-center text-base leading-6 text-black"
+                      >
+                        Travel style
+                      </label>
+                      <div className="flex gap-2 justify-center mt-2 bg-white rounded-xl border border-solid border-neutral-300 justify-center items-start py-5 px-5 text-gray-400">
+                        <select
+                          id="travelStyle"
+                          name="travelStyle"
+                          className="flex-1 justify-center my-auto text-base"
+                        >
+                          <option value="" disabled selected>
+                            Travel style
+                          </option>
+                          <option value="Relaxation">Relaxation</option>
+                          <option value="Romantic for Couples">
+                            Romantic for Couples
+                          </option>
+                          <option value="Adventure and Outdoor">
+                            Adventure and Outdoor
+                          </option>
+                          <option value="Cultural and Historical">
+                            Cultural and Historical
+                          </option>
+                          <option value="Family-Friendly">
+                            Family-Friendly
+                          </option>
+                        </select>
+                      </div>
                     </div>
-                    <section className="flex flex-col justify-center px-4 mt-2 text-2xl leading-8 text-black max-md:max-w-full">
-                      <h3 className="pt-4 pb-1.5 max-md:max-w-full">
-                        Recommended Tours
-                      </h3>
-                    </section>
-                    <div className="flex overflow-x-auto gap-5 py-4 pl-4 mt-2 max-md:flex-wrap horizontal-scroll-container">
-                      {tours.map((tour, index) => (
-                          <TourCard {...tour} />
-                      ))}
-                    </div>
-                  </article>
-                  {/* <div className="flex flex-col px-6 pb-10 mt-5 max-md:px-5 max-md:max-w-full"> */}
-                  <section className="flex flex-wrap px-12 py-10 bg-white rounded-3xl border border-solid shadow-md my-10 horizontal-scroll-container">
-  <h3 className="pb-4 text-3xl leading-9 text-black max-w-full">
-    You might also find these itineraries interesting:
-  </h3>
-  <div className="flex flex-wrap gap-5">
-    {getOtherTourPlan()}
-  </div>
-</section>
-
+                  </div>
                 </div>
               </div>
-            </section>
-          </main>
+            </div>
+            <button
+              type="submit"
+              className="flex flex-col justify-center items-end px-16 text-xl leading-7 text-center text-white whitespace-nowrap max-md:pl-5 max-md:max-w-full"
+            >
+              <div className="flex flex-col justify-center px-7 py-5 max-w-full bg-purple-700 rounded-xl border-2 border-purple-700 border-solid w-[111px] max-md:px-5">
+                <div className="flex flex-col justify-center">
+                  <div className="flex gap-1">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/fb0d0658cf9b335cdaacd81b9ab907245576d9c177f77639f741b8ddd5f7bf87?apiKey=79050f2e54364c9b998b189296d8e734&"
+                      alt=""
+                      className="shrink-0 my-auto w-5 aspect-square"
+                    />
+                    <span className="justify-center">Run</span>
+                  </div>
+                </div>
+              </div>
+            </button>
+          </div>
+        </form>
+      </header>
+      <main className="flex flex-col pt-16 mt-5 max-md:max-w-full">
+        <section className="flex flex-col w-[900px] self-center">
+          <div className="flex flex-col px-12 py-10 bg-white rounded-3xl border border-solid shadow-md max-md:px-5 max-md:max-w-full">
+            <h2 className="justify-center items-center px-16 text-3xl leading-9 text-center text-black max-md:px-5 max-md:max-w-full">
+              Recently Created Trip Plans
+            </h2>
+            <div className="flex flex-col pt-4 mt-4">
+              <TripGrid trips={recentTrips.slice(0, 3)} />
+              <TripGrid trips={recentTrips.slice(3, 6)} />
+              <TripGrid trips={recentTrips.slice(6, 9)} />
+              <TripGrid trips={recentTrips.slice(9, 12)} />
+              <TripGrid trips={recentTrips.slice(12, 15)} />
+            </div>
+          </div>
+        </section>
+        <section className="flex justify-center items-center px-16 py-8 max-md:px-5 max-md:max-w-full">
+          <div className="flex gap-5 justify-between max-md:flex-wrap">
+            <div className="flex flex-col pb-2 text-lg leading-7 text-black">
+              <h3 className="justify-center font-semibold">
+                Don't see the right plan for you?
+              </h3>
+              <p className="justify-center">We've got you covered</p>
+            </div>
+            <button className="flex flex-col justify-center px-7 py-5 text-xl leading-7 text-center text-white bg-purple-700 rounded-xl border-2 border-gray-900 border-solid max-md:px-5">
+              <div className="flex flex-col justify-center">
+                <div className="flex gap-1">
+                  <img
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/cc92b9fa58a3189780c02ecd5ba378d4ddc77b410cbf35c9cae6d5e19ded1c4f?apiKey=79050f2e54364c9b998b189296d8e734&"
+                    alt=""
+                    className="shrink-0 my-auto w-5 aspect-square"
+                  />
+                  <span className="justify-center">Tailor your plan</span>
+                </div>
+              </div>
+            </button>
+          </div>
+        </section>
+      </main>
+      <footer className="flex flex-col items-center px-16 pt-10 w-full max-md:px-5 max-md:max-w-full">
+        <div className="flex flex-col px-8 max-w-full w-[1280px] max-md:px-5">
+          <div className="flex gap-5 justify-between max-md:flex-wrap max-md:max-w-full">
+            <div className="flex flex-col">
+              <p className="justify-center text-base leading-6 text-gray-600">
+                AI Trip Planner
+              </p>
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/9bee9ef1419e8b312789dc502ebffc0bb9b01468996cbe7713363be9f25c4ddf?apiKey=79050f2e54364c9b998b189296d8e734&"
+                alt="AI Trip Planner Logo"
+                className="mt-6 w-14 aspect-square"
+              />
+              <div className="flex gap-5 justify-between items-center mt-6">
+                <a
+                  href="#"
+                  className="flex justify-center items-center self-stretch my-auto"
+                >
+                  <img
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/7169df64b2359756fc08f3724453fc4e47104af181b5e0f4fa35e03a0c692933?apiKey=79050f2e54364c9b998b189296d8e734&"
+                    alt="Social Media Icon"
+                    className="w-6 aspect-square"
+                  />
+                </a>
+                <a
+                  href="#"
+                  className="flex justify-center items-center self-stretch my-auto"
+                >
+                  <img
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/7926e2031e3c3f44dce4675b310cd4c4181fdd4e4a800f410074d87eaa289a3f?apiKey=79050f2e54364c9b998b189296d8e734&"
+                    alt="Social Media Icon"
+                    className="w-6 aspect-square"
+                  />
+                </a>
+                <a
+                  href="#"
+                  className="flex justify-center items-center self-stretch"
+                >
+                  <img
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/6438297eed049a11e67461955b7f48a52c878fb0b340a2cdf2218d12db01808b?apiKey=79050f2e54364c9b998b189296d8e734&"
+                    alt="Social Media Icon"
+                    className="w-7 aspect-square"
+                  />
+                </a>
+              </div>
+            </div>
+            <nav className="flex flex-col pb-14 text-base leading-6 max-md:max-w-full">
+              <h4 className="justify-center text-gray-700 max-md:max-w-full">
+                Explore More
+              </h4>
+              <div className="flex flex-col justify-center mt-8 text-gray-600 max-md:max-w-full">
+                <a href="#" className="flex gap-3 max-md:flex-wrap">
+                  <img
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/7a40e5ed44099bc3be6cdef84cc2ffa3e5bbd9e50afa5ab58a3fc527d02b7de7?apiKey=79050f2e54364c9b998b189296d8e734&"
+                    alt="Marcos GPT Icon"
+                    className="shrink-0 w-12 aspect-square"
+                  />
+                  <div className="flex flex-col">
+                    <h5 className="justify-center font-semibold">Marcos GPT</h5>
+                    <p className="justify-center">
+                      Chat with Marcos and refine your trip (ChatGPT plus users)
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </nav>
+          </div>
+          <div className="flex flex-col pt-10 pb-10 mt-10 border-t border-solid max-md:max-w-full">
+            <p className="justify-center text-base leading-6 text-gray-600 max-md:max-w-full">
+              © 2024 BuildAI.Space LTD. All rights reserved.
+            </p>
+            <div className="flex gap-0 pr-20 text-xs leading-4 text-gray-400 max-md:flex-wrap max-md:pr-5">
+              <p>By using BuildAI, you agree to our</p>
+              <a href="#" className="justify-center font-semibold">
+                Terms of Service
+              </a>
+              <p>and</p>
+              <a href="#" className="justify-center font-semibold">
+                Privacy Policy
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-      <Footer />
+      </footer>
     </div>
   );
 };
