@@ -106,7 +106,7 @@ const MyComponent: React.FC = () => {
                   title={item.title}
                   description={item.description}
                   iconSrc={item.iconSrc}
-                  imageSrc={item.hasOwnProperty('imageSrc') ? item.imageSrc : null}
+                  imageSrc={item.imageSrc}
 
                 />
               ))}
