@@ -304,11 +304,11 @@ const MyComponent: React.FC = () => {
                 </div>
               </div>
             </div>
-            <button
-              type="submit"
-              className="flex flex-col justify-center items-end px-16 text-xl leading-7 text-center text-white whitespace-nowrap max-md:pl-5 max-md:max-w-full"
+            <div
+              className="flex flex-col justify-center items-end  text-xl leading-7 text-center text-white whitespace-nowrap max-md:pl-5 max-md:max-w-full"
             >
-              <div className="flex flex-col justify-center px-7 py-5 max-w-full bg-purple-700 rounded-xl border-2 border-purple-700 border-solid w-[111px] max-md:px-5">
+              <button 
+              type="submit" className="flex flex-col justify-center px-5 py-3 max-w-full bg-purple-700 rounded-xl border-2 border-purple-700 border-solid w-[111px] max-md:px-5">
                 <div className="flex flex-col justify-center">
                   <div className="flex gap-1">
                     <img
@@ -320,8 +320,8 @@ const MyComponent: React.FC = () => {
                     <span className="justify-center">Run</span>
                   </div>
                 </div>
-              </div>
-            </button>
+              </button>
+            </div>
           </div>
         </form>
       </header>
