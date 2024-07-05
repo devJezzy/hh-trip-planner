@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import HotelCard from "../components/HotelProp";
-import TourCard from "../components/TourPro";
-import ItineraryItem from "../components/ItenaryItem";
-import searchImages from "../utils/getImage";
+import HotelCard from "@/components/HotelProp";
+import TourCard from "@/components/TourPro";
+import ItineraryItem from "@/components/ItenaryItem";
+import searchImages from "@/utils/getImage";
 import { GetPlanProps } from "@/context/PlanContext";
 import Footer from "@/components/Footer";
 import getResponse from "@/utils/gemini";
@@ -25,7 +25,7 @@ interface TransformedItineraryItem {
   time: string;
   title: string;
   description: string;
-  imageSrc?: string;
+  imageSrc: string;
   iconSrc: string;
 }
 
@@ -43,24 +43,25 @@ const iconSrcMapping: Record<string, string> = {
 };
 
 const MyComponent: React.FC = () => {
-  
-
   const router = useRouter();
   const { travelDays, destination, travelStyle } = router.query;
-  const tripTitle = travelDays == "1" ? `${travelStyle} in ${destination}` : `${travelDays} Days ${travelStyle} Trip in ${destination}`
+  const tripTitle =
+    travelDays == "1"
+      ? `${travelStyle} in`
+      : `${travelDays} Days ${travelStyle} Trip in`;
   useEffect(() => {
     console.log("Received query parameters:");
     console.log("Travel days:", travelDays);
     console.log("Destination:", destination);
     console.log("Travel style:", travelStyle);
     if (travelDays && destination && travelStyle) {
-    main(`${travelStyle} trip to ${destination} for ${travelDays} days`);
+      main(`${travelStyle} trip to ${destination} for ${travelDays} days`);
     }
   }, [travelDays, destination, travelStyle]);
 
   async function main(query: string) {
     try {
-      console.log(query)
+      console.log(query);
       const response = await getResponse(query);
       console.log(response);
       const itineraryData: DayItinerary[] = JSON.parse(response);
@@ -73,7 +74,7 @@ const MyComponent: React.FC = () => {
     }
   }
 
-  const default_data = [
+  const default_data: TransformedItineraryDay[] = [
     {
       day: "",
       items: [
@@ -82,13 +83,14 @@ const MyComponent: React.FC = () => {
           title: "",
           description: "",
           iconSrc: "",
-          imageSrc: ""
+          imageSrc: "",
         },
       ],
     },
   ];
 
-  const [itineraryData, SetitIneraryData] = useState(default_data);
+  const [itineraryData, SetitIneraryData] =
+    useState<TransformedItineraryDay[]>(default_data);
 
   function getTourPlan() {
     return (
@@ -107,7 +109,6 @@ const MyComponent: React.FC = () => {
                   description={item.description}
                   iconSrc={item.iconSrc}
                   imageSrc={item.imageSrc}
-
                 />
               ))}
               <div className="flex flex-col justify-end py-20">
@@ -206,21 +207,22 @@ const MyComponent: React.FC = () => {
     router.back();
   };
 
-
   return (
     <div className="flex flex-col justify-center bg-[linear-gradient(0deg,#FFF_0%,#FFF_100%,#FFF)]">
       <div className="flex flex-col w-full max-md:max-w-full">
         <div className="flex flex-col self-center max-w-full w-[900px]">
           <header className="flex flex-col justify-center px-4 max-md:max-w-full">
             <div className="flex flex-col max-w-[900px] max-md:max-w-full">
-              <button onClick={handleNavigateBack} className="flex z-10 flex-col pt-8 w-[46px]">
-                
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/2eef449fac01638cd2827539ac2ec782fe147ac92b8f938332799b14b388ddfa?apiKey=79050f2e54364c9b998b189296d8e734&"
-                          alt=""
-                          className="aspect-square w-[18px]"
-                        />
+              <button
+                onClick={handleNavigateBack}
+                className="flex z-10 flex-col pt-8 w-[46px]"
+              >
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/2eef449fac01638cd2827539ac2ec782fe147ac92b8f938332799b14b388ddfa?apiKey=79050f2e54364c9b998b189296d8e734&"
+                  alt=""
+                  className="aspect-square w-[18px]"
+                />
               </button>
               <h1 className="flex flex-col justify-center pt-10 text-6xl tracking-tighter text-black leading-[67.2px] max-md:max-w-full max-md:text-4xl">
                 <div className="pb-2 max-md:max-w-full max-md:text-4xl">
@@ -310,7 +312,7 @@ const MyComponent: React.FC = () => {
                             />
                             <div className="flex relative justify-center items-center px-16 py-20 bg-black bg-opacity-20 max-md:px-5 max-md:max-w-full">
                               <h2 className="justify-center px-9 py-2 mt-2 mb-4 max-w-full rounded-xl w-[500px] max-md:px-5 max-md:max-w-full">
-                                {tripTitle} <br/> {destination}
+                                {tripTitle} <br /> {destination}
                               </h2>
                             </div>
                           </div>
@@ -339,7 +341,7 @@ const MyComponent: React.FC = () => {
                     </section>
                     <div className="flex overflow-x-auto gap-5 py-4 pl-4 mt-2 max-md:flex-wrap horizontal-scroll-container">
                       {tours.map((tour, index) => (
-                        <TourCard {...tour} />
+                        <TourCard key={index} {...tour} />
                       ))}
                     </div>
                   </article>

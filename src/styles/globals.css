@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 .horizontal-scroll-container {
-    display: flex;
-    overflow-x: auto;
-    scrollbar-width: none; /* For Firefox */
-    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
-  }
-  
-  .horizontal-scroll-container::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
-  }
-  
-  .horizontal-scroll-content {
-    display: flex;
-    gap: 16px; /* Adjust the gap between items as needed */
-  }
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.horizontal-scroll-content {
+  display: flex;
+  gap: 16px; /* Adjust the gap between items as needed */
+}

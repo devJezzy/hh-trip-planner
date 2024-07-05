@@ -172,8 +172,8 @@ const MyComponent: React.FC = () => {
     });
     console.log("Form data:", data);
     router.push({
-      pathname: '/home',
-      query: data
+      pathname: "/home",
+      query: data,
     });
   };
 
@@ -338,13 +338,13 @@ const MyComponent: React.FC = () => {
           <div className="flex gap-5 justify-between max-md:flex-wrap">
             <div className="flex flex-col pb-2 text-lg leading-7 text-black">
               <h3 className="justify-center font-semibold">
-                Don't see the right plan for you?
+                Don&apos;t see the right plan for you?
               </h3>
-              <p className="justify-center">We've got you covered</p>
+              <p className="justify-center">We&apos;ve got you covered</p>
             </div>
             <button className="flex flex-col justify-center px-7 py-5 text-xl leading-7 text-center text-white bg-purple-700 rounded-xl border-2 border-gray-900 border-solid max-md:px-5">
               <div className="flex flex-col justify-center">
-                <div className="flex gap-1">
+                <div className="flex gap-1">∂
                   <img
                     loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/cc92b9fa58a3189780c02ecd5ba378d4ddc77b410cbf35c9cae6d5e19ded1c4f?apiKey=79050f2e54364c9b998b189296d8e734&"

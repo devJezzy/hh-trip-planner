@@ -1,4 +1,9 @@
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold, Part } from "@google/generative-ai";
+import {
+  GoogleGenerativeAI,
+  HarmCategory,
+  HarmBlockThreshold,
+  Part,
+} from "@google/generative-ai";
 
 const apiKey = "AIzaSyD8gfH9jWohxyvHTcT_Clgp4xHjVBbJlJ0";
 // const apiKey = "";
@@ -58,29 +63,27 @@ sample json response:
 }
 `;
 
-
-
 export default async function getResponse(query: string): Promise<string> {
-    const chatSession = await model.startChat({
-      generationConfig,
-      history: [
-        {
-          role: "user",
-          parts: [
-            {
-              text: sys_prompt,
-            },
-          ],
-        },
-      ],
-    });
+  const chatSession = await model.startChat({
+    generationConfig,
+    history: [
+      {
+        role: "user",
+        parts: [
+          {
+            text: sys_prompt,
+          },
+        ],
+      },
+    ],
+  });
 
-    const result = await chatSession.sendMessage(query);
-    const match = result.response.text().match(/```json([\s\S]*?)```/);
+  const result = await chatSession.sendMessage(query);
+  const match = result.response.text().match(/```json([\s\S]*?)```/);
 
-    if (match && match[1]) {
-      return `[${match[1].trim()}]`;
-    } else {
-      throw new Error("No JSON content found between the markers.");
-    }
+  if (match && match[1]) {
+    return `[${match[1].trim()}]`;
+  } else {
+    throw new Error("No JSON content found between the markers.");
   }
+}

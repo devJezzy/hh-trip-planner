@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 interface PixabayImage {
   id: number;
@@ -32,15 +32,17 @@ interface PixabayResponse {
   hits: PixabayImage[];
 }
 
-const API_KEY = '44761113-208b312ff870546ec40cfb95a'; // Replace with your Pixabay API key
+const API_KEY = "44761113-208b312ff870546ec40cfb95a"; // Replace with your Pixabay API key
 
 async function searchImages(query: string): Promise<PixabayImage[]> {
   try {
-    const url = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}&image_type=photo`;
+    const url = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(
+      query
+    )}&image_type=photo`;
     const response = await axios.get<PixabayResponse>(url);
     return response.data.hits;
   } catch (error) {
-    console.error('Error fetching images from Pixabay:', error);
+    console.error("Error fetching images from Pixabay:", error);
     return [];
   }
 }
