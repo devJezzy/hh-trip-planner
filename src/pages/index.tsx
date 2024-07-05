@@ -172,7 +172,7 @@ const MyComponent: React.FC = () => {
     });
     console.log("Form data:", data);
     router.push({
-      pathname: "/home",
+      pathname: "/Home",
       query: data,
     });
   };
