@@ -1,5 +1,7 @@
+import DropdownComponent from "@/components/dropDown";
 import router from "next/router";
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
+import Select from "react-dropdown-select";
 
 type TripCardProps = {
   imageSrc: string;
@@ -7,6 +9,16 @@ type TripCardProps = {
   days: number;
   location: string;
 };
+
+interface Option {
+  label: string;
+  value: number;
+}
+
+interface travelStyleOption {
+  label: string;
+  value: number;
+}
 
 const TripCard: React.FC<TripCardProps> = ({
   imageSrc,
@@ -177,6 +189,34 @@ const MyComponent: React.FC = () => {
     });
   };
 
+  const options: Option[] = [
+    { label: '1', value: 1 },
+    { label: '2', value: 2 },
+    { label: '3', value: 3 },
+    { label: '4', value: 4 },
+    { label: '5', value: 5 },
+    { label: '6', value: 6 },
+    { label: '7', value: 7 }
+  ];
+  const [selectedValues, setSelectedValues] = useState<Option[]>([]);
+
+  const handleChange = (values: Option[]) => {
+      setSelectedValues(values);
+      console.log("Selected values:", values);
+  };
+
+  const travelStyleOption: travelStyleOption[] = [
+    { label: 'Family-Friendly', value: 1 },
+    { label: 'Romantic for Couples', value: 2},
+    { label: 'Adventure and Outdoor', value: 3},
+    { label: 'Cultural and Historical', value: 4 },
+  ];
+  const [TravelStyleSelectedValues, setTravelStyleSelectedValues] = useState<Option[]>([]);
+
+  const handleTraveStyleChange = (values: Option[]) => {
+    setTravelStyleSelectedValues(values);
+      console.log("Selected values:", values);
+  };
   return (
     <div className="flex flex-col">
       <header className="flex flex-col self-center pb-5 max-w-full w-[900px]">
@@ -208,23 +248,17 @@ const MyComponent: React.FC = () => {
                       >
                         Travel days
                       </label>
-                      <div className="flex gap-2 justify-center mt-2 bg-white rounded-xl border border-solid border-neutral-300 justify-center items-start py-5 px-5 text-gray-400">
-                        <select
-                          id="travelDays"
+                      <div className="flex flex-col justify-center mt-2">
+                        <Select
                           name="travelDays"
-                          className="flex-1 justify-center my-auto text-base"
-                        >
-                          <option value="" disabled selected>
-                            Travel days
-                          </option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                          <option value="7">7</option>
-                        </select>
+                          placeholder	= "Travel Days"
+                          options={options}
+                          values={selectedValues}
+                          onChange={handleChange}
+                          style={{ padding: "20px", borderRadius: "10px" }}
+                          color="gray"
+                          required
+                        />
                       </div>
                     </div>
                   </div>
@@ -239,23 +273,7 @@ const MyComponent: React.FC = () => {
                         Destination
                       </label>
                       <div className="flex flex-col justify-center mt-2">
-                        <div className="flex gap-2.5 justify-center pl-6 rounded-xl border border-solid bg-white bg-opacity-80 border-neutral-300 max-md:pl-5">
-                          <input
-                            id="destination"
-                            name="destination"
-                            type="text"
-                            className="flex-1 justify-center my-auto text-base text-gray-400 whitespace-nowrap"
-                            placeholder="Destination"
-                          />
-                          <div className="flex flex-col justify-center items-start py-5 pr-4">
-                            <img
-                              loading="lazy"
-                              src="https://cdn.builder.io/api/v1/image/assets/TEMP/3d649a3995632fdd108f4b21e76131a061ff3412665eb25e0cd457fec67a57ac?apiKey=79050f2e54364c9b998b189296d8e734&"
-                              alt=""
-                              className="w-4 aspect-square"
-                            />
-                          </div>
-                        </div>
+                        <DropdownComponent />
                       </div>
                     </div>
                   </div>
@@ -269,29 +287,17 @@ const MyComponent: React.FC = () => {
                       >
                         Travel style
                       </label>
-                      <div className="flex gap-2 justify-center mt-2 bg-white rounded-xl border border-solid border-neutral-300 justify-center items-start py-5 px-5 text-gray-400">
-                        <select
-                          id="travelStyle"
+                      <div className="flex flex-col justify-center mt-2">
+                        <Select
                           name="travelStyle"
-                          className="flex-1 justify-center my-auto text-base"
-                        >
-                          <option value="" disabled selected>
-                            Travel style
-                          </option>
-                          <option value="Relaxation">Relaxation</option>
-                          <option value="Romantic for Couples">
-                            Romantic for Couples
-                          </option>
-                          <option value="Adventure and Outdoor">
-                            Adventure and Outdoor
-                          </option>
-                          <option value="Cultural and Historical">
-                            Cultural and Historical
-                          </option>
-                          <option value="Family-Friendly">
-                            Family-Friendly
-                          </option>
-                        </select>
+                          placeholder	= "Travel Style"
+                          options={travelStyleOption}
+                          values={TravelStyleSelectedValues}
+                          onChange={handleTraveStyleChange}
+                          style={{ padding: "20px", borderRadius: "10px" }}
+                          color="gray"
+                          required
+                        />
                       </div>
                     </div>
                   </div>
@@ -344,7 +350,8 @@ const MyComponent: React.FC = () => {
             </div>
             <button className="flex flex-col justify-center px-7 py-5 text-xl leading-7 text-center text-white bg-purple-700 rounded-xl border-2 border-gray-900 border-solid max-md:px-5">
               <div className="flex flex-col justify-center">
-                <div className="flex gap-1">∂
+                <div className="flex gap-1">
+                  ∂
                   <img
                     loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/cc92b9fa58a3189780c02ecd5ba378d4ddc77b410cbf35c9cae6d5e19ded1c4f?apiKey=79050f2e54364c9b998b189296d8e734&"
