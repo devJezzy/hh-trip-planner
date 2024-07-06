@@ -2,6 +2,7 @@ import DropdownComponent from "@/components/dropDown";
 import router from "next/router";
 import React, { FormEvent, useState } from "react";
 import Select from "react-dropdown-select";
+import Image from 'next/image';
 
 type TripCardProps = {
   imageSrc: string;
@@ -102,77 +103,7 @@ const MyComponent: React.FC = () => {
       title: "4 Days in Family-Friendly Zimbabwe",
       days: 4,
       location: "Zimbabwe",
-    },
-    {
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/9b42d1fd0222b81307b67fb6b0f57b01b3a54df93fd87f69a6ede04349940641?apiKey=79050f2e54364c9b998b189296d8e734&",
-      title: "5-Day Relaxation Trip in Poland",
-      days: 5,
-      location: "Poland",
-    },
-    {
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/1dd563a5511c8e7b87e90935cefe2f3c333563268b25ca4804cd4bb49782adaa?apiKey=79050f2e54364c9b998b189296d8e734&",
-      title: "4-Day Relaxation Trip in Miami",
-      days: 4,
-      location: "Miami",
-    },
-    {
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/f13afc401a1e0e8a46ad2f01aa2225bea6390a82e168eb0c86158058a625e9d7?apiKey=79050f2e54364c9b998b189296d8e734&",
-      title: "Family-Friendly Bangalore Urban Itinerary for 3 Days",
-      days: 3,
-      location: "Bangalore Urban",
-    },
-    {
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/8ba8ce64f415cd75a50ddd5414ab06a36e401a861654089e03bdd2ea15168a5a?apiKey=79050f2e54364c9b998b189296d8e734&",
-      title: "2-Day Family-Friendly Trip in Bangalore Urban",
-      days: 2,
-      location: "Bangalore Urban",
-    },
-    {
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/932ee4ca3f2d1efcd2ade1d967493476a9387ded5af0cc658c8bb49f0c4c2bb1?apiKey=79050f2e54364c9b998b189296d8e734&",
-      title: "Family-Friendly Bangalore Urban Trip in 1 Day",
-      days: 1,
-      location: "Bangalore Urban",
-    },
-    {
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/c0b1bc44ceda5a9ad306814b7956eae9d0d5d4259540b5fc16d034f18adddddb?apiKey=79050f2e54364c9b998b189296d8e734&",
-      title: "One day in Family-Friendly Bangalore Urban",
-      days: 1,
-      location: "Bangalore Urban",
-    },
-    {
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/64b08909bfbbf4e04038c3e107f81c0549bdeed9c05556c316c9329d9a7d3755?apiKey=79050f2e54364c9b998b189296d8e734&",
-      title: "1 Day Trip to Manilla with Family-Friendly Activities",
-      days: 1,
-      location: "Manilla",
-    },
-    {
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/6b4f0c507ab98a4fa54c3392eeb8e3525571a6c4fbe9e482915ff9c7b43e5d9d?apiKey=79050f2e54364c9b998b189296d8e734&",
-      title: "2-Day Family-Friendly Trip to Manilla 🌴",
-      days: 2,
-      location: "Manilla",
-    },
-    {
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/6b4f0c507ab98a4fa54c3392eeb8e3525571a6c4fbe9e482915ff9c7b43e5d9d?apiKey=79050f2e54364c9b998b189296d8e734&",
-      title: "3-Day Family-Friendly Trip to Manilla",
-      days: 3,
-      location: "Manilla",
-    },
-    {
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/6b4f0c507ab98a4fa54c3392eeb8e3525571a6c4fbe9e482915ff9c7b43e5d9d?apiKey=79050f2e54364c9b998b189296d8e734&",
-      title: "4 Days of Relaxation in Manilla",
-      days: 4,
-      location: "Manilla",
-    },
+    }
   ];
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -222,11 +153,19 @@ const MyComponent: React.FC = () => {
       <header className="flex flex-col self-center pb-5 max-w-full w-[900px]">
         <div className="flex flex-col justify-center px-4 max-md:max-w-full">
           <div className="flex flex-col pt-12 max-w-[900px] max-md:max-w-full">
+            <div className="flex flex-row">
             <h1 className="flex flex-col justify-center pt-10 text-6xl tracking-tighter text-black leading-[67.2px] max-md:max-w-full max-md:text-4xl">
               <span className="pb-2 max-md:max-w-full max-md:text-4xl">
-                AI Trip Planner 🌴
+                AI Trip Planner
               </span>
             </h1>
+            <Image className="mx-8"
+                                            src="/travel-bot.png"
+                                            alt="Main"
+                                            width={150}
+      height={50}
+                                        /> 
+                                        </div>
             <p className="justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full">
               Plan your dream trip with personalized itineraries.
             </p>
@@ -364,95 +303,7 @@ const MyComponent: React.FC = () => {
             </button>
           </div>
         </section>
-      </main>
-      <footer className="flex flex-col items-center px-16 pt-10 w-full max-md:px-5 max-md:max-w-full">
-        <div className="flex flex-col px-8 max-w-full w-[1280px] max-md:px-5">
-          <div className="flex gap-5 justify-between max-md:flex-wrap max-md:max-w-full">
-            <div className="flex flex-col">
-              <p className="justify-center text-base leading-6 text-gray-600">
-                AI Trip Planner
-              </p>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/9bee9ef1419e8b312789dc502ebffc0bb9b01468996cbe7713363be9f25c4ddf?apiKey=79050f2e54364c9b998b189296d8e734&"
-                alt="AI Trip Planner Logo"
-                className="mt-6 w-14 aspect-square"
-              />
-              <div className="flex gap-5 justify-between items-center mt-6">
-                <a
-                  href="#"
-                  className="flex justify-center items-center self-stretch my-auto"
-                >
-                  <img
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/7169df64b2359756fc08f3724453fc4e47104af181b5e0f4fa35e03a0c692933?apiKey=79050f2e54364c9b998b189296d8e734&"
-                    alt="Social Media Icon"
-                    className="w-6 aspect-square"
-                  />
-                </a>
-                <a
-                  href="#"
-                  className="flex justify-center items-center self-stretch my-auto"
-                >
-                  <img
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/7926e2031e3c3f44dce4675b310cd4c4181fdd4e4a800f410074d87eaa289a3f?apiKey=79050f2e54364c9b998b189296d8e734&"
-                    alt="Social Media Icon"
-                    className="w-6 aspect-square"
-                  />
-                </a>
-                <a
-                  href="#"
-                  className="flex justify-center items-center self-stretch"
-                >
-                  <img
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/6438297eed049a11e67461955b7f48a52c878fb0b340a2cdf2218d12db01808b?apiKey=79050f2e54364c9b998b189296d8e734&"
-                    alt="Social Media Icon"
-                    className="w-7 aspect-square"
-                  />
-                </a>
-              </div>
-            </div>
-            <nav className="flex flex-col pb-14 text-base leading-6 max-md:max-w-full">
-              <h4 className="justify-center text-gray-700 max-md:max-w-full">
-                Explore More
-              </h4>
-              <div className="flex flex-col justify-center mt-8 text-gray-600 max-md:max-w-full">
-                <a href="#" className="flex gap-3 max-md:flex-wrap">
-                  <img
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/7a40e5ed44099bc3be6cdef84cc2ffa3e5bbd9e50afa5ab58a3fc527d02b7de7?apiKey=79050f2e54364c9b998b189296d8e734&"
-                    alt="Marcos GPT Icon"
-                    className="shrink-0 w-12 aspect-square"
-                  />
-                  <div className="flex flex-col">
-                    <h5 className="justify-center font-semibold">Marcos GPT</h5>
-                    <p className="justify-center">
-                      Chat with Marcos and refine your trip (ChatGPT plus users)
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </nav>
-          </div>
-          <div className="flex flex-col pt-10 pb-10 mt-10 border-t border-solid max-md:max-w-full">
-            <p className="justify-center text-base leading-6 text-gray-600 max-md:max-w-full">
-              © 2024 BuildAI.Space LTD. All rights reserved.
-            </p>
-            <div className="flex gap-0 pr-20 text-xs leading-4 text-gray-400 max-md:flex-wrap max-md:pr-5">
-              <p>By using BuildAI, you agree to our</p>
-              <a href="#" className="justify-center font-semibold">
-                Terms of Service
-              </a>
-              <p>and</p>
-              <a href="#" className="justify-center font-semibold">
-                Privacy Policy
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      </main> 
     </div>
   );
 };

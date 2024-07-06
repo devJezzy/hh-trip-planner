@@ -226,10 +226,10 @@ const MyComponent: React.FC = () => {
               </button>
               <h1 className="flex flex-col justify-center pt-10 text-6xl tracking-tighter text-black leading-[67.2px] max-md:max-w-full max-md:text-4xl">
                 <div className="pb-2 max-md:max-w-full max-md:text-4xl">
-                  AI Trip Planner 🌴
+                  AI Trip Planners
                 </div>
               </h1>
-              <p className="justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full">
+              <p className="justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full"> 
                 Plan your dream trip with personalized itineraries.
               </p>
             </div>
@@ -360,7 +360,7 @@ const MyComponent: React.FC = () => {
           </main>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
