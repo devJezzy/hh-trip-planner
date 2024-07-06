@@ -8,6 +8,7 @@ import { GetPlanProps } from "@/context/PlanContext";
 import Footer from "@/components/Footer";
 import getResponse from "@/utils/gemini";
 import { useRouter } from "next/router";
+import Blob from '@/components/Blob';
 
 interface Activities {
   Time: string;
@@ -48,6 +49,7 @@ const MyComponent: React.FC = () => {
   const router = useRouter();
   const { travelDays, destination, travelStyle } = router.query;
   const city = Array.isArray(destination) ? destination.join(", ") : (destination ?? "");
+  const [isLoaded,setIsLoaded] = useState(false)
 
   const tripTitle =
     travelDays == "1"
@@ -62,6 +64,7 @@ const MyComponent: React.FC = () => {
       main(`${travelStyle} trip to ${destination} for ${travelDays} days`);
     }
   }, [travelDays, destination, travelStyle]);
+  
 
   async function main(query: string) {
     try {
@@ -70,6 +73,7 @@ const MyComponent: React.FC = () => {
       console.log(response);
       const itineraryData: DayItinerary[] = JSON.parse(response);
       const transformedData = await transformItinerary(itineraryData);
+      setIsLoaded(true)
       // console.log(transformedData);
       // console.log("transformedData");
       SetitIneraryData(transformedData);
@@ -219,6 +223,7 @@ const MyComponent: React.FC = () => {
 
   return (
     <div className="flex flex-col justify-center bg-[linear-gradient(0deg,#FFF_0%,#FFF_100%,#FFF)]">
+      {!isLoaded ? <Blob /> :
       <div className="flex flex-col w-full max-md:max-w-full">
         <div className="flex flex-col self-center max-w-full w-[900px]">
           <header className="flex flex-col justify-center px-4 max-md:max-w-full">
@@ -370,6 +375,7 @@ const MyComponent: React.FC = () => {
           </main>
         </div>
       </div>
+}
       {/* <Footer /> */}
     </div>
   );
