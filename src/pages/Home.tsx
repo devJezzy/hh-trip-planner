@@ -14,6 +14,7 @@ interface Activities {
   Activity: string;
   Comments: string;
   Type: string;
+  Name: string
 }
 
 interface DayItinerary {
@@ -27,6 +28,7 @@ interface TransformedItineraryItem {
   description: string;
   imageSrc: string;
   iconSrc: string;
+  name: string;
 }
 
 interface TransformedItineraryDay {
@@ -45,15 +47,17 @@ const iconSrcMapping: Record<string, string> = {
 const MyComponent: React.FC = () => {
   const router = useRouter();
   const { travelDays, destination, travelStyle } = router.query;
+  const city = Array.isArray(destination) ? destination.join(", ") : (destination ?? "");
+
   const tripTitle =
     travelDays == "1"
       ? `${travelStyle} in`
       : `${travelDays} Days ${travelStyle} Trip in`;
   useEffect(() => {
-    console.log("Received query parameters:");
-    console.log("Travel days:", travelDays);
-    console.log("Destination:", destination);
-    console.log("Travel style:", travelStyle);
+    // console.log("Received query parameters:");
+    // console.log("Travel days:", travelDays);
+    // console.log("Destination:", destination);
+    // console.log("Travel style:", travelStyle);
     if (travelDays && destination && travelStyle) {
       main(`${travelStyle} trip to ${destination} for ${travelDays} days`);
     }
@@ -61,13 +65,13 @@ const MyComponent: React.FC = () => {
 
   async function main(query: string) {
     try {
-      console.log(query);
+      // console.log(query);
       const response = await getResponse(query);
       console.log(response);
       const itineraryData: DayItinerary[] = JSON.parse(response);
       const transformedData = await transformItinerary(itineraryData);
-      console.log(transformedData);
-      console.log("transformedData");
+      // console.log(transformedData);
+      // console.log("transformedData");
       SetitIneraryData(transformedData);
     } catch (error) {
       console.error(error);
@@ -84,6 +88,7 @@ const MyComponent: React.FC = () => {
           description: "",
           iconSrc: "",
           imageSrc: "",
+          name:""
         },
       ],
     },
@@ -110,6 +115,8 @@ const MyComponent: React.FC = () => {
                   description={item.description}
                   iconSrc={item.iconSrc}
                   imageSrc={item.imageSrc}
+                  name={item.name}
+                  destination = {city}
                 />
               ))}
               <div className="flex flex-col justify-end py-20">
@@ -162,7 +169,7 @@ const MyComponent: React.FC = () => {
       originalData.map(async (dayData) => {
         const transformedItems: TransformedItineraryItem[] = await Promise.all(
           dayData.Itinerary.map(async (item: Activities) => {
-            const { Time, Activity, Comments, Type } = item;
+            const { Time, Activity, Comments, Type, Name } = item;
             const iconSrc = iconSrcMapping[Type] || iconSrcMapping.default;
 
             try {
@@ -175,6 +182,7 @@ const MyComponent: React.FC = () => {
                 description: Comments,
                 imageSrc,
                 iconSrc,
+                name:Name
               };
             } catch (error) {
               console.error(
@@ -187,6 +195,7 @@ const MyComponent: React.FC = () => {
                 description: Comments,
                 imageSrc: "",
                 iconSrc,
+                name:Name
               };
             }
           })

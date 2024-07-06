@@ -1,9 +1,9 @@
-import DropdownComponent from "@/components/dropDown";
+
 import router from "next/router";
 import React, { FormEvent, useState } from "react";
 import Select from "react-dropdown-select";
 import Image from "next/image";
-import { useRef } from 'react';
+import { useRef } from "react";
 
 import { Dancing_Script } from "next/font/google";
 const dancingScript = Dancing_Script({ subsets: ["latin"] });
@@ -37,7 +37,7 @@ const TripCard: React.FC<TripCardProps> = ({
         loading="lazy"
         src={imageSrc}
         alt={`Trip to ${location}`}
-        className="mx-6 w-full aspect-[1.43] max-w-[230px] max-md:mx-2.5"
+        className=" w-fulls max-w-[230px] "
       />
       <div className="flex flex-col px-4 py-3 rounded-none">
         <h3 className="justify-center leading-6">{title}</h3>
@@ -72,12 +72,11 @@ const TripGrid: React.FC<TripGridProps> = ({ trips }) => (
 );
 
 const MyComponent: React.FC = () => {
-
   const formRef = useRef<HTMLFormElement>(null);
 
   const scrollToForm = () => {
     if (formRef.current) {
-      formRef.current.scrollIntoView({ behavior: 'smooth' });
+      formRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
   const recentTrips = [
@@ -125,7 +124,7 @@ const MyComponent: React.FC = () => {
     formData.forEach((value, key) => {
       data[key] = value as string;
     });
-    console.log("Form data:", data);
+    // console.log("Form data:", data);
     router.push({
       pathname: "/Home",
       query: data,
@@ -145,7 +144,7 @@ const MyComponent: React.FC = () => {
 
   const handleChange = (values: Option[]) => {
     setSelectedValues(values);
-    console.log("Selected values:", values);
+    // console.log("Selected values:", values);
   };
 
   const travelStyleOption: travelStyleOption[] = [
@@ -160,125 +159,146 @@ const MyComponent: React.FC = () => {
 
   const handleTraveStyleChange = (values: Option[]) => {
     setTravelStyleSelectedValues(values);
-    console.log("Selected values:", values);
+    // console.log("Selected values:", values);
+  };
+
+  const destinationOption: Option[] = [
+    { label: "Kerala", value: 1},
+    { label: "Goa", value: 2},
+    { label: "Himachal", value: 3},
+    { label: "Andaman", value: 4},
+    { label: "Sikkim", value: 5},
+    { label: "Mysore", value: 6},
+    { label: "Kodaikanal", value: 7},
+    { label: "Ooty", value: 8},
+    { label: "Coorg", value: 9},
+    { label: "Yercaud", value: 10},
+    { label: "Delhi", value: 11},
+    { label: "International Destinations", value: 12},
+    { label: "Thailand", value: 13},
+    { label: "Singapore", value: 14},
+    { label: "Srilanka", value: 15},
+    { label: "Europe", value: 16},
+    { label: "Mauritius", value: 17},
+    { label: "Maldives", value: 18},
+    { label: "Malaysia", value: 1},
+    { label: "dubai", value: 19},
+    { label: "Bali", value: 20},
+    { label: "Vietnam", value: 21},
+  ];
+  const [selectedDestination, setSelectedDestination] = useState<Option[]>([]);
+
+  const handleDestinationChange = (values: Option[]) => {
+    setSelectedDestination(values);
+    // console.log("Selected values:", values);
   };
   return (
     <div className="flex flex-col">
-      <header className="flex flex-col self-center pb-5 max-w-full w-9/12">
-        <div className="flex flex-col justify-center px-4 max-md:max-w-full">
-          <div className="flex flex-col pt-12 max-w-[900px] max-md:max-w-full">
-            <div className="flex flex-row">
-              <h1 className="flex flex-col justify-center pt-10 text-6xl tracking-tighter text-black leading-[67.2px] max-md:max-w-full max-md:text-4xl">
-                <span className={dancingScript.className}>AI Trip Planner</span>
-              </h1>
-              <Image
-                className="mx-8"
-                src="/travel-bot.png"
-                alt="Main"
-                width={150}
-                height={50}
-              />
-            </div>
-            <p className="type justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full">
-              Plan your dream trip with personalized itineraries.
-            </p>
+      <header className="flex flex-col self-center pb-5 max-w-full w-1/3 max-md:w-11/12">
+        <div className="trip-planner-sec px-4 pt-12 max-md:max-w-full">
+          <div className="name-logo-sec flex flex-row">
+            <h1 className="pt-10 text-6xl tracking-tighter max-md:max-w-full max-md:text-4xl">
+              <span className={dancingScript.className}>AI Trip Planner</span>
+            </h1>
+            <Image
+              className="mx-8 max-md:mx-2 max-md:w-25"
+              src="/travel-bot.png"
+              alt="Main"
+              width={150}
+              height={50}
+            />
           </div>
+          <p className="type justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full max-md:text-sm">
+            Plan your dream trip with personalized itineraries.
+          </p>
         </div>
-        <form ref={formRef}
+        <form
+          ref={formRef}
           onSubmit={handleSubmit}
-          className="flex flex-col px-4 pt-10 pb-2 mt-5 max-md:pr-5 max-md:max-w-full"
+          className="flex flex-col px-4 pt-10 pb-2 max-w-full"
         >
-          <div className="flex flex-col max-md:max-w-full">
-            <div className="flex-wrap max-md:max-w-full">
-              <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                <div className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full">
-                  <div className="flex flex-col grow justify-center self-stretch py-2">
-                    <div className="flex flex-col pb-7">
-                      <label
-                        htmlFor="travelDays"
-                        className="justify-center text-base leading-6 text-black"
-                      >
-                        Travel days
-                      </label>
-                      <div className="flex flex-col justify-center mt-2">
-                        <Select
-                          name="travelDays"
-                          placeholder="Travel Days"
-                          options={options}
-                          values={selectedValues}
-                          onChange={handleChange}
-                          style={{ padding: "20px", borderRadius: "10px" }}
-                          color="gray"
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col ml-5 w-[33%] max-md:ml-0 max-md:w-full">
-                  <div className="flex flex-col grow justify-center self-stretch py-2">
-                    <div className="flex flex-col pb-7">
-                      <label
-                        htmlFor="destination"
-                        className="justify-center text-base leading-6 text-black whitespace-nowrap"
-                      >
-                        Destination
-                      </label>
-                      <div className="flex flex-col justify-center mt-2">
-                        <DropdownComponent />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col ml-5 w-[33%] max-md:ml-0 max-md:w-full">
-                  <div className="flex flex-col grow justify-center self-stretch py-2">
-                    <div className="flex flex-col pb-7">
-                      <label
-                        htmlFor="travelStyle"
-                        className="justify-center text-base leading-6 text-black"
-                      >
-                        Travel style
-                      </label>
-                      <div className="flex flex-col justify-center mt-2">
-                        <Select
-                          name="travelStyle"
-                          placeholder="Travel Style"
-                          options={travelStyleOption}
-                          values={TravelStyleSelectedValues}
-                          onChange={handleTraveStyleChange}
-                          style={{ padding: "20px", borderRadius: "10px" }}
-                          color="gray"
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          <div className="flex  max-md:flex-col max-md:gap-0">
+            <div className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full py-2">
+              <label
+                htmlFor="travelDays"
+                className="justify-center text-base leading-6 text-black"
+              >
+                Travel days
+              </label>
+              <div className="flex flex-col justify-center mt-2">
+                <Select
+                  name="travelDays"
+                  placeholder="Travel Days"
+                  options={options}
+                  values={selectedValues}
+                  onChange={handleChange}
+                  style={{ padding: "20px", borderRadius: "10px" }}
+                  color="gray"
+                  required
+                />
               </div>
             </div>
-            <div className="flex flex-col justify-center items-end  text-xl leading-7 text-center text-white whitespace-nowrap max-md:pl-5 max-md:max-w-full">
-              <button
-                type="submit"
-                className="flex flex-col justify-center px-5 py-3 max-w-full bg-purple-700 rounded-xl border-2 border-purple-700 border-solid w-[111px] max-md:px-5"
+            <div className="flex flex-col ml-5 w-[33%] max-md:ml-0 max-md:w-full py-2">
+              <label
+                htmlFor="destination"
+                className="justify-center text-base leading-6 text-black whitespace-nowrap"
               >
-                <div className="flex flex-col justify-center">
-                  <div className="flex gap-1">
-                    <img
-                      loading="lazy"
-                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/fb0d0658cf9b335cdaacd81b9ab907245576d9c177f77639f741b8ddd5f7bf87?apiKey=79050f2e54364c9b998b189296d8e734&"
-                      alt=""
-                      className="shrink-0 my-auto w-5 aspect-square"
-                    />
-                    <span className="justify-center">Run</span>
-                  </div>
-                </div>
-              </button>
+                Destination
+              </label>
+              <div className="flex flex-col justify-center mt-2">
+                <Select
+                  name="destination"
+                  placeholder="Destination"
+                  options={destinationOption}
+                  values={selectedDestination}
+                  onChange={handleDestinationChange}
+                  style={{ padding: "20px", borderRadius: "10px" }}
+                  color="gray"
+                  required
+                />
+              </div>
+            </div>
+            <div className="flex flex-col ml-5 w-[33%] max-md:ml-0 max-md:w-full py-2">
+              <label
+                htmlFor="travelStyle"
+                className="justify-center text-base leading-6 text-black"
+              >
+                Travel style
+              </label>
+              <div className="flex flex-col justify-center mt-2">
+                <Select
+                  name="travelStyle"
+                  placeholder="Travel Style"
+                  options={travelStyleOption}
+                  values={TravelStyleSelectedValues}
+                  onChange={handleTraveStyleChange}
+                  style={{ padding: "20px", borderRadius: "10px" }}
+                  color="gray"
+                  required
+                />
+              </div>
             </div>
           </div>
+          <button
+            type="submit"
+            className="flex text-white self-end flex-col justify-center px-5 py-3 max-w-full bg-purple-700 rounded-xl border-2 border-purple-700 border-solid w-[111px] max-md:px-5 my-4"
+          >
+            <div className="flex flex-col justify-center">
+              <div className="flex gap-1">
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/fb0d0658cf9b335cdaacd81b9ab907245576d9c177f77639f741b8ddd5f7bf87?apiKey=79050f2e54364c9b998b189296d8e734&"
+                  alt=""
+                  className="shrink-0 my-auto w-5 aspect-square"
+                />
+                <span className="justify-center">Run</span>
+              </div>
+            </div>
+          </button>
         </form>
       </header>
-      <main className="flex flex-col pt-16 mt-5 max-md:max-w-full">
-        <section className="flex flex-col w-[900px] self-center">
+      <main className="flex flex-col mt-5 max-md:max-w-full">
+        <section className="flex flex-col w-1/3 max-md:w-11/12 self-center">
           <div className="flex flex-col px-12 py-10 bg-white rounded-3xl border border-solid shadow-md max-md:px-5 max-md:max-w-full">
             <h2 className="justify-center items-center px-16 text-3xl leading-9 text-center text-black max-md:px-5 max-md:max-w-full">
               Recently Created Trip Plans
@@ -300,7 +320,10 @@ const MyComponent: React.FC = () => {
               </h3>
               <p className="justify-center">We&apos;ve got you covered</p>
             </div>
-            <button onClick={scrollToForm} className="flex flex-col justify-center px-7 py-5 text-xl leading-7 text-center text-white bg-purple-700 rounded-xl border-2 border-gray-900 border-solid max-md:px-5">
+            <button
+              onClick={scrollToForm}
+              className="flex flex-col justify-center px-7 py-5 text-xl leading-7 text-center text-white bg-purple-700 rounded-xl border-2 border-gray-900 border-solid max-md:px-5"
+            >
               <div className="flex flex-col justify-center">
                 <div className="flex gap-1">
                   <img
