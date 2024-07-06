@@ -100,6 +100,7 @@ const MyComponent: React.FC = () => {
             <h3 className="justify-center text-2xl font-semibold leading-6 text-black max-md:max-w-full">
               {day.day}
             </h3>
+            
             <div className="flex flex-col mt-6 max-md:max-w-full">
               {day.items.map((item, idx) => (
                 <ItineraryItem

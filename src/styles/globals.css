@@ -17,3 +17,34 @@
   display: flex;
   gap: 16px; /* Adjust the gap between items as needed */
 }
+
+.animated-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Custom */
+
+.type {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: type 1.5s steps(90) 1.5s 1 normal both, cursor 1s step-end infinite;
+}
+
+@keyframes type {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes cursor {
+  50% {
+    border-color: transparent;
+  }
+}

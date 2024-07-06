@@ -2,7 +2,11 @@ import DropdownComponent from "@/components/dropDown";
 import router from "next/router";
 import React, { FormEvent, useState } from "react";
 import Select from "react-dropdown-select";
-import Image from 'next/image';
+import Image from "next/image";
+import { useRef } from 'react';
+
+import { Dancing_Script } from "next/font/google";
+const dancingScript = Dancing_Script({ subsets: ["latin"] });
 
 type TripCardProps = {
   imageSrc: string;
@@ -68,6 +72,14 @@ const TripGrid: React.FC<TripGridProps> = ({ trips }) => (
 );
 
 const MyComponent: React.FC = () => {
+
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const scrollToForm = () => {
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const recentTrips = [
     {
       imageSrc:
@@ -103,7 +115,7 @@ const MyComponent: React.FC = () => {
       title: "4 Days in Family-Friendly Zimbabwe",
       days: 4,
       location: "Zimbabwe",
-    }
+    },
   ];
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -121,57 +133,58 @@ const MyComponent: React.FC = () => {
   };
 
   const options: Option[] = [
-    { label: '1', value: 1 },
-    { label: '2', value: 2 },
-    { label: '3', value: 3 },
-    { label: '4', value: 4 },
-    { label: '5', value: 5 },
-    { label: '6', value: 6 },
-    { label: '7', value: 7 }
+    { label: "1", value: 1 },
+    { label: "2", value: 2 },
+    { label: "3", value: 3 },
+    { label: "4", value: 4 },
+    { label: "5", value: 5 },
+    { label: "6", value: 6 },
+    { label: "7", value: 7 },
   ];
   const [selectedValues, setSelectedValues] = useState<Option[]>([]);
 
   const handleChange = (values: Option[]) => {
-      setSelectedValues(values);
-      console.log("Selected values:", values);
+    setSelectedValues(values);
+    console.log("Selected values:", values);
   };
 
   const travelStyleOption: travelStyleOption[] = [
-    { label: 'Family-Friendly', value: 1 },
-    { label: 'Romantic for Couples', value: 2},
-    { label: 'Adventure and Outdoor', value: 3},
-    { label: 'Cultural and Historical', value: 4 },
+    { label: "Family-Friendly", value: 1 },
+    { label: "Romantic for Couples", value: 2 },
+    { label: "Adventure and Outdoor", value: 3 },
+    { label: "Cultural and Historical", value: 4 },
   ];
-  const [TravelStyleSelectedValues, setTravelStyleSelectedValues] = useState<Option[]>([]);
+  const [TravelStyleSelectedValues, setTravelStyleSelectedValues] = useState<
+    Option[]
+  >([]);
 
   const handleTraveStyleChange = (values: Option[]) => {
     setTravelStyleSelectedValues(values);
-      console.log("Selected values:", values);
+    console.log("Selected values:", values);
   };
   return (
     <div className="flex flex-col">
-      <header className="flex flex-col self-center pb-5 max-w-full w-[900px]">
+      <header className="flex flex-col self-center pb-5 max-w-full w-9/12">
         <div className="flex flex-col justify-center px-4 max-md:max-w-full">
           <div className="flex flex-col pt-12 max-w-[900px] max-md:max-w-full">
             <div className="flex flex-row">
-            <h1 className="flex flex-col justify-center pt-10 text-6xl tracking-tighter text-black leading-[67.2px] max-md:max-w-full max-md:text-4xl">
-              <span className="pb-2 max-md:max-w-full max-md:text-4xl">
-                AI Trip Planner
-              </span>
-            </h1>
-            <Image className="mx-8"
-                                            src="/travel-bot.png"
-                                            alt="Main"
-                                            width={150}
-      height={50}
-                                        /> 
-                                        </div>
-            <p className="justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full">
+              <h1 className="flex flex-col justify-center pt-10 text-6xl tracking-tighter text-black leading-[67.2px] max-md:max-w-full max-md:text-4xl">
+                <span className={dancingScript.className}>AI Trip Planner</span>
+              </h1>
+              <Image
+                className="mx-8"
+                src="/travel-bot.png"
+                alt="Main"
+                width={150}
+                height={50}
+              />
+            </div>
+            <p className="type justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full">
               Plan your dream trip with personalized itineraries.
             </p>
           </div>
         </div>
-        <form
+        <form ref={formRef}
           onSubmit={handleSubmit}
           className="flex flex-col px-4 pt-10 pb-2 mt-5 max-md:pr-5 max-md:max-w-full"
         >
@@ -190,7 +203,7 @@ const MyComponent: React.FC = () => {
                       <div className="flex flex-col justify-center mt-2">
                         <Select
                           name="travelDays"
-                          placeholder	= "Travel Days"
+                          placeholder="Travel Days"
                           options={options}
                           values={selectedValues}
                           onChange={handleChange}
@@ -229,7 +242,7 @@ const MyComponent: React.FC = () => {
                       <div className="flex flex-col justify-center mt-2">
                         <Select
                           name="travelStyle"
-                          placeholder	= "Travel Style"
+                          placeholder="Travel Style"
                           options={travelStyleOption}
                           values={TravelStyleSelectedValues}
                           onChange={handleTraveStyleChange}
@@ -243,11 +256,11 @@ const MyComponent: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div
-              className="flex flex-col justify-center items-end  text-xl leading-7 text-center text-white whitespace-nowrap max-md:pl-5 max-md:max-w-full"
-            >
-              <button 
-              type="submit" className="flex flex-col justify-center px-5 py-3 max-w-full bg-purple-700 rounded-xl border-2 border-purple-700 border-solid w-[111px] max-md:px-5">
+            <div className="flex flex-col justify-center items-end  text-xl leading-7 text-center text-white whitespace-nowrap max-md:pl-5 max-md:max-w-full">
+              <button
+                type="submit"
+                className="flex flex-col justify-center px-5 py-3 max-w-full bg-purple-700 rounded-xl border-2 border-purple-700 border-solid w-[111px] max-md:px-5"
+              >
                 <div className="flex flex-col justify-center">
                   <div className="flex gap-1">
                     <img
@@ -287,10 +300,9 @@ const MyComponent: React.FC = () => {
               </h3>
               <p className="justify-center">We&apos;ve got you covered</p>
             </div>
-            <button className="flex flex-col justify-center px-7 py-5 text-xl leading-7 text-center text-white bg-purple-700 rounded-xl border-2 border-gray-900 border-solid max-md:px-5">
+            <button onClick={scrollToForm} className="flex flex-col justify-center px-7 py-5 text-xl leading-7 text-center text-white bg-purple-700 rounded-xl border-2 border-gray-900 border-solid max-md:px-5">
               <div className="flex flex-col justify-center">
                 <div className="flex gap-1">
-                  ∂
                   <img
                     loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/cc92b9fa58a3189780c02ecd5ba378d4ddc77b410cbf35c9cae6d5e19ded1c4f?apiKey=79050f2e54364c9b998b189296d8e734&"
@@ -303,7 +315,7 @@ const MyComponent: React.FC = () => {
             </button>
           </div>
         </section>
-      </main> 
+      </main>
     </div>
   );
 };
