@@ -1,4 +1,4 @@
-import getChatbotResponse from '@/utils/geminiChat';
+import getChatBotResponse from '@/utils/geminiChat';
 import React, { useState, useRef, useEffect } from 'react';
 
 const ChatBot: React.FC = () => {
@@ -22,25 +22,34 @@ const ChatBot: React.FC = () => {
       // }, 500); // Simulate delay for bot response
 
 
-     let Response= await getChatbotResponse(inputValue)
+     let Response= await getChatBotResponse(inputValue)
+     console.log(Response)
      generateBotResponse (Response,newMessages)
 
     }
   };
 
+  // const generateBotResponse = (botResponse: string, updatedMessages: { text: string, sender: string }[]) => {
+  //   // let botResponse = 'I\'m not sure how to respond to that.';
+
+  //   // if (userMessage.toLowerCase().includes('hello')) {
+  //   //   botResponse = 'Hello! How can I assist you today?';
+  //   // } else if (userMessage.toLowerCase().includes('help')) {
+  //   //   botResponse = 'Sure, what do you need help with?';
+  //   // } else if (userMessage.toLowerCase().includes('bye')) {
+  //   //   botResponse = 'Goodbye! Have a great day!';
+  //   // }
+
+  //   setMessages([...updatedMessages, { text: botResponse, sender: 'bot' }]);
+  // };
+
   const generateBotResponse = (botResponse: string, updatedMessages: { text: string, sender: string }[]) => {
-    // let botResponse = 'I\'m not sure how to respond to that.';
-
-    // if (userMessage.toLowerCase().includes('hello')) {
-    //   botResponse = 'Hello! How can I assist you today?';
-    // } else if (userMessage.toLowerCase().includes('help')) {
-    //   botResponse = 'Sure, what do you need help with?';
-    // } else if (userMessage.toLowerCase().includes('bye')) {
-    //   botResponse = 'Goodbye! Have a great day!';
-    // }
-
-    setMessages([...updatedMessages, { text: botResponse, sender: 'bot' }]);
+    // Replace line breaks with <br />
+    const formattedBotResponse = botResponse.replace(/\n/g, '<br />');
+  
+    setMessages([...updatedMessages, { text: formattedBotResponse, sender: 'bot' }]);
   };
+  
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -64,11 +73,12 @@ const ChatBot: React.FC = () => {
           </div>
           <div className="flex-1 p-4 overflow-y-auto">
             {messages.map((message, index) => (
-              <div key={index} className={`mb-2 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
-                <span className={`inline-block px-2 py-1 rounded-lg ${message.sender === 'user' ? 'bg-blue-200' : 'bg-gray-200'}`}>
-                  {message.text}
-                </span>
-              </div>
+              <div className={`mb-2 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
+              <span className={`inline-block px-2 py-1 rounded-lg ${message.sender === 'user' ? 'bg-blue-200' : 'bg-gray-200'}`} 
+                    dangerouslySetInnerHTML={{ __html: message.text }}>
+              </span>
+            </div>
+            
             ))}
             <div ref={messagesEndRef} />
           </div>
