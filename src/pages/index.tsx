@@ -7,6 +7,7 @@ import { useRef } from "react";
 
 import { Dancing_Script } from "next/font/google";
 import TourCard from "@/components/TourPro";
+import ChatBot from "@/components/chatBot";
 const dancingScript = Dancing_Script({ subsets: ["latin"] });
 
 // type TripCardProps = {
@@ -212,6 +213,9 @@ const MyComponent: React.FC = () => {
   };
   return (
     <div className="flex flex-col w-full">
+      <div className="z-10">
+          <ChatBot />
+          </div>
       <div className="body self-center max-sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] 2xl:w-[40%]">
       <header 
           ref={formRef} className="flex flex-col self-center pb-5">

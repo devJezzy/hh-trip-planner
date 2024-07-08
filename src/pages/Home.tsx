@@ -6,6 +6,7 @@ import getResponse from "@/utils/gemini";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Dancing_Script } from "next/font/google";
+import ChatBot from "@/components/chatBot";
 const dancingScript = Dancing_Script({ subsets: ["latin"] });
 
 const ItineraryItem = dynamic(() => import("@/components/ItenaryItem"));
@@ -115,6 +116,9 @@ const MyComponent: React.FC = () => {
     <div className="flex flex-col justify-center bg-[linear-gradient(0deg,#FFF_0%,#FFF_100%,#FFF)]">
       {!isLoaded ? <Blob /> : (
         <div className="flex flex-col w-full max-md:max-w-full">
+          <div className="z-10 bg-opacity-0">
+          <ChatBot />
+          </div>
           <button onClick={handleNavigateBack} className="flex z-10 flex-col pt-8 w-[46px] p-4">
             <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/2eef449fac01638cd2827539ac2ec782fe147ac92b8f938332799b14b388ddfa?apiKey=79050f2e54364c9b998b189296d8e734&" alt="" className="aspect-square w-[18px]" />
           </button>
