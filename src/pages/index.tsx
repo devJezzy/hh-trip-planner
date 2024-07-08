@@ -232,7 +232,8 @@ const MyComponent: React.FC = () => {
             Plan your dream trip with personalized itineraries.
           </p>
         </div>
-        <form
+      </header>
+      <form
           onSubmit={handleSubmit}
           className="flex flex-col px-4 pt-10 pb-2 max-w-full"
         >
@@ -315,7 +316,6 @@ const MyComponent: React.FC = () => {
             </div>
           </button>
         </form>
-      </header>
       <main className="flex flex-col mt-5 p-4">
         <section className="flex flex-col self-center w-full">
           <div className="flex flex-col px-12 py-10 bg-white rounded-3xl border border-solid shadow-md max-md:px-5">

@@ -9,6 +9,9 @@ import Footer from "@/components/Footer";
 import getResponse from "@/utils/gemini";
 import { useRouter } from "next/router";
 import Blob from '@/components/Blob';
+import Image from "next/image";
+import { Dancing_Script } from "next/font/google";
+const dancingScript = Dancing_Script({ subsets: ["latin"] });
 
 interface Activities {
   Time: string;
@@ -123,7 +126,7 @@ const MyComponent: React.FC = () => {
                   destination = {city}
                 />
               ))}
-              <div className="flex flex-col justify-end py-20">
+              <div className="flex flex-col justify-end py-5">
                 <div className="flex flex-col justify-end pt-2">
                   <button className="flex gap-0 justify-center px-3 py-2 bg-purple-600 rounded-lg max-w-[174px]">
                     <span className="text-sm font-bold leading-5 text-center text-white">
@@ -149,22 +152,22 @@ const MyComponent: React.FC = () => {
     );
   }
 
-  const getOtherTourPlan = () => {
-    return (
-      <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-        {OtherTourPlan.map((tour, index) => (
-          <TourCard
-            key={index}
-            imageSrc={tour.imageSrc}
-            name={tour.name}
-            description={tour.description}
-            duration={tour.duration}
-            location={tour.location}
-          />
-        ))}
-      </div>
-    );
-  };
+  // const getOtherTourPlan = () => {
+  //   return (
+  //     <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+  //       {OtherTourPlan.map((tour, index) => (
+  //         <TourCard
+  //           key={index}
+  //           imageSrc={tour.imageSrc}
+  //           name={tour.name}
+  //           description={tour.description}
+  //           duration={tour.duration}
+  //           location={tour.location}
+  //         />
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   async function transformItinerary(
     originalData: DayItinerary[]
@@ -213,9 +216,9 @@ const MyComponent: React.FC = () => {
     );
   }
 
-  const { hotels } = GetPlanProps();
-  const { tours } = GetPlanProps();
-  const { OtherTourPlan } = GetPlanProps();
+  // const { hotels } = GetPlanProps();
+  // const { tours } = GetPlanProps();
+  // const { OtherTourPlan } = GetPlanProps();
 
   const handleNavigateBack = () => {
     router.back();
@@ -225,12 +228,9 @@ const MyComponent: React.FC = () => {
     <div className="flex flex-col justify-center bg-[linear-gradient(0deg,#FFF_0%,#FFF_100%,#FFF)]">
       {!isLoaded ? <Blob /> :
       <div className="flex flex-col w-full max-md:max-w-full">
-        <div className="flex flex-col self-center max-w-full w-[900px]">
-          <header className="flex flex-col justify-center px-4 max-md:max-w-full">
-            <div className="flex flex-col max-w-[900px] max-md:max-w-full">
-              <button
+        <button
                 onClick={handleNavigateBack}
-                className="flex z-10 flex-col pt-8 w-[46px]"
+                className="flex z-10 flex-col pt-8 w-[46px] p-4"
               >
                 <img
                   loading="lazy"
@@ -239,16 +239,27 @@ const MyComponent: React.FC = () => {
                   className="aspect-square w-[18px]"
                 />
               </button>
-              <h1 className="flex flex-col justify-center pt-10 text-6xl tracking-tighter text-black leading-[67.2px] max-md:max-w-full max-md:text-4xl">
-                <div className="pb-2 max-md:max-w-full max-md:text-4xl">
-                  AI Trip Planners
-                </div>
-              </h1>
-              <p className="justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full"> 
-                Plan your dream trip with personalized itineraries.
-              </p>
-            </div>
-          </header>
+        <div className="flex flex-col self-center max-w-full w-[900px]">
+        <header 
+          className="flex flex-col self-center pb-5 max-sm:w-[90%]">
+        <div className="trip-planner-sec px-4 pt-12 max-md:max-w-full">
+          <div className="name-logo-sec flex flex-row ">
+            <h1 className="pt-10 text-6xl tracking-tighter max-md:max-w-full max-md:text-4xl">
+              <span className={dancingScript.className}>AI Trip Planner</span>
+            </h1>
+            <Image
+              className="mx-8 max-md:mx-2 max-md:w-25"
+              src="/travel-bot.png"
+              alt="Main"
+              width={150}
+              height={50}
+            />
+          </div>
+          <p className="type justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full max-md:text-sm">
+            Plan your dream trip with personalized itineraries.
+          </p>
+        </div>
+      </header>
           <main className="flex flex-col justify-center mt-5 max-md:max-w-full">
             <section className="flex flex-col pb-12 max-w-[900px] max-md:max-w-full">
               <div className="flex flex-col flex-wrap justify-center max-md:max-w-full">
@@ -273,7 +284,7 @@ const MyComponent: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col justify-center items-end pr-2 pl-16 whitespace-nowrap max-md:pl-5 max-md:max-w-full">
+                    {/* <div className="flex flex-col justify-center items-end pr-2 pl-16 whitespace-nowrap max-md:pl-5 max-md:max-w-full">
                       <div className="flex gap-0">
                         <button className="flex gap-1 p-2">
                           <img
@@ -312,13 +323,12 @@ const MyComponent: React.FC = () => {
                           <span className="justify-center">Share</span>
                         </button>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
-                  <article className="flex flex-col justify-center p-px bg-white rounded-2xl border border border-solid max-w-[1916px] max-md:max-w-full">
-                    <div className="flex flex-col justify-center pb-12 max-md:max-w-full">
+                  <article className="flex flex-col justify-center p-px bg-white rounded-2xl border border border-solid max-w-[1916px] max-md:max-w- overflow-hidden">
+
                       <div className="flex flex-col max-md:max-w-full">
-                        <div className="flex flex-col justify-center text-4xl font-bold text-center text-white leading-[60px] max-md:max-w-full">
-                          <div className="flex overflow-hidden relative flex-col justify-center w-full min-h-[320px] max-md:max-w-full">
+                          <div className="text-4xl font-bold text-center text-white leading-[60px] flex overflow-hidden relative flex-col justify-center w-full min-h-[320px] max-md:max-w-full">
                             <img
                               loading="lazy"
                               src="https://cdn.builder.io/api/v1/image/assets/TEMP/3d6073c01f85c38e08281dd37c62770ee08d558bf871f25852991c076c601017?apiKey=79050f2e54364c9b998b189296d8e734&"
@@ -331,15 +341,11 @@ const MyComponent: React.FC = () => {
                               </h2>
                             </div>
                           </div>
-                        </div>
-                        <div className="flex flex-col max-md:max-w-full">
                           <div className="flex flex-col px-4 pt-4 pb-7 max-md:max-w-full">
                             {getTourPlan()}
-                          </div>
                         </div>
                       </div>
-                    </div>
-                    <section className="flex flex-col justify-center px-4 mt-2 text-2xl leading-8 text-black max-md:max-w-full">
+                    {/* <section className="flex flex-col justify-center px-4 mt-2 text-2xl leading-8 text-black max-md:max-w-full">
                       <h3 className="pt-4 pb-1.5 max-md:max-w-full">
                         Recommended Hotels
                       </h3>
@@ -358,17 +364,17 @@ const MyComponent: React.FC = () => {
                       {tours.map((tour, index) => (
                         <TourCard key={index} {...tour} />
                       ))}
-                    </div>
+                    </div> */}
                   </article>
                   {/* <div className="flex flex-col px-6 pb-10 mt-5 max-md:px-5 max-md:max-w-full"> */}
-                  <section className="flex flex-wrap px-12 py-10 bg-white rounded-3xl border border-solid shadow-md my-10 horizontal-scroll-container">
+                  {/* <section className="flex flex-wrap px-12 py-10 bg-white rounded-3xl border border-solid shadow-md my-10 horizontal-scroll-container">
                     <h3 className="pb-4 text-3xl leading-9 text-black max-w-full">
                       You might also find these itineraries interesting:
                     </h3>
                     <div className="flex flex-wrap gap-5">
                       {getOtherTourPlan()}
                     </div>
-                  </section>
+                  </section> */}
                 </div>
               </div>
             </section>

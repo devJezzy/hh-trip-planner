@@ -22,11 +22,12 @@ const ItineraryItem: React.FC<ItineraryItemProps> = ({
   const mapUrl = `https://www.google.com/maps/search/${name.replace(/ /g, "+")}+in+${destination}`;
   return (
     <div className="flex flex-col justify-center mt-3 max-md:max-w-full">
-      <div className="flex flex-col justify-center blur-none max-md:max-w-full">
+      <a href={mapUrl}
+                target="_blank" className="flex flex-col justify-center blur-none max-md:max-w-full">
         <div
           className={`flex ${
             imageSrc ? "gap-2" : ""
-          } py-2.5 pr-2.5 pl-px bg-white rounded-2xl border border border-solid shadow-md ${
+          } py-2.5 pr-2.5 pl-px bg-white rounded-2xl hover:shadow-md border border-solid ${
             imageSrc ? "max-md:flex-wrap" : ""
           }`}
         >
@@ -49,13 +50,11 @@ const ItineraryItem: React.FC<ItineraryItemProps> = ({
                   className="w-4 aspect-square"
                 />
               </div>
-              <a
-                href={mapUrl}
-                target="_blank"
+              <div
                 className="justify-center text-xl font-medium leading-7 text-gray-900"
               >
                 {title}
-              </a>
+              </div>
             </div>
             <div className="flex flex-col justify-center px-2 mt-2 text-base font-light leading-6 text-neutral-400 max-md:max-w-full">
               <div className="justify-center px-1 py-2 rounded-xl max-md:max-w-full">
@@ -75,17 +74,17 @@ const ItineraryItem: React.FC<ItineraryItemProps> = ({
             )}
           </div>
           {imageSrc && (
-            <div className="flex flex-col justify-end items-center pt-14">
+            <div className="flex flex-col justify-end items-center self-center">
               <img
                 loading="lazy"
                 src={imageSrc}
                 alt=""
-                className="aspect-square w-[90px]"
+                className="aspect-square w-[90px]  rounded-2xl"
               />
             </div>
           )}
         </div>
-      </div>
+      </a>
     </div>
   );
 };
