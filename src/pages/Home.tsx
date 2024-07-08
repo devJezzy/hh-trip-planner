@@ -366,7 +366,7 @@ const MyComponent: React.FC = () => {
                       You might also find these itineraries interesting:
                     </h3>
                     <div className="flex flex-wrap gap-5">
-                      ß {getOtherTourPlan()}
+                      {getOtherTourPlan()}
                     </div>
                   </section>
                 </div>

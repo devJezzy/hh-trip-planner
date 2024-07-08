@@ -6,14 +6,15 @@ import Image from "next/image";
 import { useRef } from "react";
 
 import { Dancing_Script } from "next/font/google";
+import TourCard from "@/components/TourPro";
 const dancingScript = Dancing_Script({ subsets: ["latin"] });
 
-type TripCardProps = {
-  imageSrc: string;
-  title: string;
-  days: number;
-  location: string;
-};
+// type TripCardProps = {
+//   imageSrc: string;
+//   title: string;
+//   days: number;
+//   location: string;
+// };
 
 interface Option {
   label: string;
@@ -25,51 +26,51 @@ interface travelStyleOption {
   value: number;
 }
 
-const TripCard: React.FC<TripCardProps> = ({
-  imageSrc,
-  title,
-  days,
-  location,
-}) => (
-  <article className="flex flex-col grow justify-center text-sm text-black text-opacity-90">
-    <div className="flex flex-col py-px bg-white rounded-lg border border-solid border-zinc-100">
-      <img
-        loading="lazy"
-        src={imageSrc}
-        alt={`Trip to ${location}`}
-        className=" w-fulls max-w-[230px] "
-      />
-      <div className="flex flex-col px-4 py-3 rounded-none">
-        <h3 className="justify-center leading-6">{title}</h3>
-        <div className="flex flex-wrap gap-1 pt-2 leading-[143%]">
-          <span className="justify-center px-2.5 py-px rounded-full border border-solid bg-neutral-200">
-            {days} days
-          </span>
-          <span className="justify-center px-2.5 py-px rounded-full border border-solid bg-neutral-200">
-            {location}
-          </span>
-        </div>
-      </div>
-    </div>
-  </article>
-);
+// const TripCard: React.FC<TripCardProps> = ({
+//   imageSrc,
+//   title,
+//   days,
+//   location,
+// }) => (
+//   <article className="flex flex-col grow justify-center text-sm text-black text-opacity-90">
+//     <div className="flex flex-col py-px bg-white rounded-lg border border-solid border-zinc-100">
+//       <img
+//         loading="lazy"
+//         src={imageSrc}
+//         alt={`Trip to ${location}`}
+//         className="w-fulls"
+//       />
+//       <div className="flex flex-col px-4 py-3 rounded-none">
+//         <h3 className="justify-center leading-6">{title}</h3>
+//         <div className="flex flex-wrap gap-1 pt-2">
+//           <span className="justify-center px-2.5 py-px rounded-full border border-solid bg-neutral-200">
+//             {days} days
+//           </span>
+//           <span className="justify-center px-2.5 py-px rounded-full border border-solid bg-neutral-200">
+//             {location}
+//           </span>
+//         </div>
+//       </div>
+//     </div>
+//   </article>
+// );
 
-type TripGridProps = {
-  trips: TripCardProps[];
-};
+// type TripGridProps = {
+//   trips: TripCardProps[];
+// };
 
-const TripGrid: React.FC<TripGridProps> = ({ trips }) => (
-  <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-    {trips.map((trip, index) => (
-      <div
-        key={index}
-        className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full"
-      >
-        <TripCard {...trip} />
-      </div>
-    ))}
-  </div>
-);
+// const TripGrid: React.FC<TripGridProps> = ({ trips }) => (
+//   <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+//     {trips.map((trip, index) => (
+//       <div
+//         key={index}
+//         className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full"
+//       >
+//         <TripCard {...trip} />
+//       </div>
+//     ))}
+//   </div>
+// );
 
 const MyComponent: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -84,38 +85,55 @@ const MyComponent: React.FC = () => {
       imageSrc:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/93274267ab974b5b9ef4d542986a483b3184a41c182b94a37c8d71d3052666d7?apiKey=79050f2e54364c9b998b189296d8e734&",
       title: "4-Day Family-Friendly Trip in South Africa 🌴",
-      days: 4,
+      days: "4 days",
       location: "South Africa",
     },
     {
       imageSrc:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/b81df1da20543a78fb2ef4a3c5130c86d85950194a6c37933a2f2384825d98e4?apiKey=79050f2e54364c9b998b189296d8e734&",
       title: "5-Day Family-Friendly Trip to Egypt",
-      days: 5,
+      days: "5 days",
       location: "Egypt",
     },
     {
       imageSrc:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/5e2f2dd811056609309724ab29df5d2e82d7470cff50a3198cd4b8dfba03eb66?apiKey=79050f2e54364c9b998b189296d8e734&",
       title: "5-Day Romantic Getaway in Cusco",
-      days: 5,
+      days: "5 days",
       location: "Cusco",
     },
     {
       imageSrc:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/53730ee5578feb02c9b999fa6d7b9279adca979f144fbac8a898cb9c71f342f7?apiKey=79050f2e54364c9b998b189296d8e734&",
       title: "3-Day Relaxing Trip to Jaffa",
-      days: 3,
+      days: "3 days",
       location: "Jaffa",
     },
     {
       imageSrc:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/62fbf7a79a7ecde95ae2a44852f19d6d22f288d0a56188e18fbd072d2eb2663a?apiKey=79050f2e54364c9b998b189296d8e734&",
       title: "4 Days in Family-Friendly Zimbabwe",
-      days: 4,
+      days: "4 days",
       location: "Zimbabwe",
     },
   ];
+
+  const getOtherTourPlan = () => {
+    return (
+      <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 self-center">
+        {recentTrips.map((tour, index) => (
+          <TourCard
+            key={index}
+            imageSrc={tour.imageSrc}
+            name={tour.title}
+            description={tour.title}
+            duration={tour.days}
+            location={tour.location}
+          />
+        ))}
+      </div>
+    );
+  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -193,8 +211,10 @@ const MyComponent: React.FC = () => {
     // console.log("Selected values:", values);
   };
   return (
-    <div className="flex flex-col">
-      <header className="flex flex-col self-center pb-5 max-w-full w-1/3 max-md:w-11/12">
+    <div className="flex flex-col w-full">
+      <div className="body self-center max-sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] 2xl:w-[40%]">
+      <header 
+          ref={formRef} className="flex flex-col self-center pb-5">
         <div className="trip-planner-sec px-4 pt-12 max-md:max-w-full">
           <div className="name-logo-sec flex flex-row">
             <h1 className="pt-10 text-6xl tracking-tighter max-md:max-w-full max-md:text-4xl">
@@ -213,7 +233,6 @@ const MyComponent: React.FC = () => {
           </p>
         </div>
         <form
-          ref={formRef}
           onSubmit={handleSubmit}
           className="flex flex-col px-4 pt-10 pb-2 max-w-full"
         >
@@ -297,22 +316,18 @@ const MyComponent: React.FC = () => {
           </button>
         </form>
       </header>
-      <main className="flex flex-col mt-5 max-md:max-w-full">
-        <section className="flex flex-col w-1/3 max-md:w-11/12 self-center">
-          <div className="flex flex-col px-12 py-10 bg-white rounded-3xl border border-solid shadow-md max-md:px-5 max-md:max-w-full">
-            <h2 className="justify-center items-center px-16 text-3xl leading-9 text-center text-black max-md:px-5 max-md:max-w-full">
+      <main className="flex flex-col mt-5 p-4">
+        <section className="flex flex-col self-center w-full">
+          <div className="flex flex-col px-12 py-10 bg-white rounded-3xl border border-solid shadow-md max-md:px-5">
+            <h2 className="justify-center items-center px-16 text-3xl leading-9 text-center text-black max-md:px-5">
               Recently Created Trip Plans
             </h2>
             <div className="flex flex-col pt-4 mt-4">
-              <TripGrid trips={recentTrips.slice(0, 3)} />
-              <TripGrid trips={recentTrips.slice(3, 6)} />
-              <TripGrid trips={recentTrips.slice(6, 9)} />
-              <TripGrid trips={recentTrips.slice(9, 12)} />
-              <TripGrid trips={recentTrips.slice(12, 15)} />
-            </div>
+            {getOtherTourPlan()}
+            </div> 
           </div>
         </section>
-        <section className="flex justify-center items-center px-16 py-8 max-md:px-5 max-md:max-w-full">
+        <section className="flex justify-center items-center  py-8">
           <div className="flex gap-5 justify-between max-md:flex-wrap">
             <div className="flex flex-col pb-2 text-lg leading-7 text-black">
               <h3 className="justify-center font-semibold">
@@ -339,6 +354,7 @@ const MyComponent: React.FC = () => {
           </div>
         </section>
       </main>
+      </div>
     </div>
   );
 };
