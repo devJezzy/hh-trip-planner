@@ -327,7 +327,7 @@ const MyComponent: React.FC = () => {
             </div> 
           </div>
         </section>
-        <section className="flex justify-center items-center  py-8">
+        <section className="flex justify-center items-center my-12">
           <div className="flex gap-5 justify-between max-md:flex-wrap">
             <div className="flex flex-col pb-2 text-lg leading-7 text-black">
               <h3 className="justify-center font-semibold">
