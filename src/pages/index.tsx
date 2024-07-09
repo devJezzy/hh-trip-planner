@@ -250,14 +250,14 @@ const MyComponent: React.FC = () => {
               >
                 Travel days
               </label>
-              <div className="flex flex-col justify-center mt-2">
+              <div className="flex flex-col justify-center mt-2 text-base lg:text-base md:text-xs">
                 <Select
                   name="travelDays"
                   placeholder="Travel Days"
                   options={options}
                   values={selectedValues}
                   onChange={handleChange}
-                  style={{ padding: "20px", borderRadius: "10px" }}
+                  style={{ padding: "20px 10px", borderRadius: "10px" }}
                   color="gray"
                   required
                 />
@@ -270,14 +270,14 @@ const MyComponent: React.FC = () => {
               >
                 Destination
               </label>
-              <div className="flex flex-col justify-center mt-2">
+              <div className="flex flex-col justify-center mt-2 text-base lg:text-base md:text-xs">
                 <Select
                   name="destination"
                   placeholder="Destination"
                   options={destinationOption}
                   values={selectedDestination}
                   onChange={handleDestinationChange}
-                  style={{ padding: "20px", borderRadius: "10px" }}
+                  style={{ padding: "20px 10px", borderRadius: "10px" }}
                   color="gray"
                   required
                 />
@@ -290,14 +290,14 @@ const MyComponent: React.FC = () => {
               >
                 Travel style
               </label>
-              <div className="flex flex-col justify-center mt-2">
+              <div className="flex flex-col justify-center mt-2 text-base lg:text-base md:text-xs">
                 <Select
                   name="travelStyle"
                   placeholder="Travel Style"
                   options={travelStyleOption}
                   values={TravelStyleSelectedValues}
                   onChange={handleTraveStyleChange}
-                  style={{ padding: "20px", borderRadius: "10px" }}
+                  style={{ padding: "20px 10px", borderRadius: "10px" }}
                   color="gray"
                   required
                 />
