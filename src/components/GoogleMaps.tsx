@@ -15,11 +15,12 @@ const addresses = [
 
 const apiKey = "AIzaSyCFQcxCyaUbVnKVMgyPhkpL5f42BPb2aaU"; // Replace with your actual API key
 
-export default function GoogleMaps() {
+export default function GoogleMaps({ addresses }: { addresses: string[] }) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [locations, setLocations] = useState<Location[]>([]);
 
   useEffect(() => {
+	console.log(addresses)
     const fetchLocations = async () => {
       try {
         const fetchedLocations = await Promise.all(
@@ -46,6 +47,7 @@ export default function GoogleMaps() {
       const { Map } = await loader.importLibrary("maps");
 
       const mapOptions: google.maps.MapOptions = {
+		draggable: true,
         center: locations[0],
         zoom: 15,
         mapId: "NEXT_MAPS_TUTS",

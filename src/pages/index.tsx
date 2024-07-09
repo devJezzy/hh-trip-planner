@@ -214,7 +214,6 @@ const MyComponent: React.FC = () => {
   };
   return (
     <div className="flex flex-col w-full">
-      <MapComponent/>
       <div className="z-10">
           <ChatBot />
           </div>

@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Dancing_Script } from "next/font/google";
 import ChatBot from "@/components/chatBot";
 const dancingScript = Dancing_Script({ subsets: ["latin"] });
+import MapComponent from "@/components/GoogleMaps";
 
 const ItineraryItem = dynamic(() => import("@/components/ItenaryItem"));
 const Blob = dynamic(() => import("@/components/Blob"));
@@ -196,6 +197,7 @@ const MyComponent: React.FC = () => {
                           ))}
                         </div>
                       </div>
+                      <MapComponent addresses={itineraryData.flatMap(day => day.items.map(item => item.name + "in" + destination))} />
                     </article>
                   </div>
                 </div>
