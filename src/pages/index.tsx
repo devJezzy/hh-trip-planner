@@ -8,6 +8,7 @@ import { useRef } from "react";
 import { Dancing_Script } from "next/font/google";
 import TourCard from "@/components/TourPro";
 import ChatBot from "@/components/chatBot";
+import MapComponent from "@/components/GoogleMaps";
 const dancingScript = Dancing_Script({ subsets: ["latin"] });
 
 // type TripCardProps = {
@@ -213,6 +214,7 @@ const MyComponent: React.FC = () => {
   };
   return (
     <div className="flex flex-col w-full">
+      <MapComponent/>
       <div className="z-10">
           <ChatBot />
           </div>
