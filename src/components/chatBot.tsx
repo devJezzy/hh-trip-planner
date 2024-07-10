@@ -19,29 +19,18 @@ const ChatBot: React.FC = () => {
       setMessages(newMessages);
       setInputValue("");
 
-      // setTimeout(() => {
-      //   generateBotResponse(inputValue, newMessages);
-      // }, 500); // Simulate delay for bot response
-
       let Response = await getChatBotResponse(inputValue);
-      console.log(Response);
-      generateBotResponse(Response, newMessages);
+      let text = '';
+      for await (const chunk of (await Response).stream) {
+        const chunkText = chunk.text();
+        console.log(chunkText);
+        text += chunkText;
+        generateBotResponse(text, newMessages);
+      }
+      // console.log(Response);
+      // generateBotResponse(Response, newMessages);
     }
   };
-
-  // const generateBotResponse = (botResponse: string, updatedMessages: { text: string, sender: string }[]) => {
-  //   // let botResponse = 'I\'m not sure how to respond to that.';
-
-  //   // if (userMessage.toLowerCase().includes('hello')) {
-  //   //   botResponse = 'Hello! How can I assist you today?';
-  //   // } else if (userMessage.toLowerCase().includes('help')) {
-  //   //   botResponse = 'Sure, what do you need help with?';
-  //   // } else if (userMessage.toLowerCase().includes('bye')) {
-  //   //   botResponse = 'Goodbye! Have a great day!';
-  //   // }
-
-  //   setMessages([...updatedMessages, { text: botResponse, sender: 'bot' }]);
-  // };
 
   const generateBotResponse = (
     botResponse: string,

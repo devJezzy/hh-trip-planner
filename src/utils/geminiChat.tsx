@@ -185,8 +185,8 @@ const parts: Part[] = [
 
 export default async function getChatBotResponse(
   query: string
-): Promise<string> {
-  const chatSession = model.startChat({
+): Promise<any> {
+  const chatSession = await model.startChat({
     generationConfig,
     history: [
       {
@@ -196,7 +196,6 @@ export default async function getChatBotResponse(
     ],
   });
 
-  const response = await chatSession.sendMessage(query);
-  const result = response.response.text();
-  return result;
+  const response = chatSession.sendMessageStream(query);
+  return response;
 }

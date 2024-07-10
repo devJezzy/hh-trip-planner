@@ -20,8 +20,13 @@ const ChatBotPc: React.FC = () => {
       setInputValue("");
 
       let Response = await getChatBotResponse(inputValue);
-      console.log(Response);
-      generateBotResponse(Response, newMessages);
+      let text = '';
+      for await (const chunk of (await Response).stream) {
+        const chunkText = chunk.text();
+        console.log(chunkText);
+        text += chunkText;
+        generateBotResponse(text, newMessages);
+      }
     }
   };
 
