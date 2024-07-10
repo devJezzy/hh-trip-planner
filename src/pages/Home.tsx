@@ -260,16 +260,17 @@ const MyComponent: React.FC = () => {
                               </div>
                             ))}
                           </div>
-                        </div>
-                        <MapComponent
+                          <MapComponent
                           addresses={itineraryData.flatMap((day) =>
                             day.items.map(
                               (item) => item.name + "in" + destination
                             )
                           )}
                         />
+                        </div>
                       </article>
                     </div>
+                    
                   </div>
                 </div>
               </section>

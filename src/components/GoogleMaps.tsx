@@ -7,12 +7,6 @@ interface Location {
   lng: number;
 }
 
-const addresses = [
-  "the madras branding company",
-  "Nungambakkam",
-  "Anna fly over",
-];
-
 const apiKey = "AIzaSyCFQcxCyaUbVnKVMgyPhkpL5f42BPb2aaU"; // Replace with your actual API key
 
 export default function GoogleMaps({ addresses }: { addresses: string[] }) {
@@ -20,7 +14,6 @@ export default function GoogleMaps({ addresses }: { addresses: string[] }) {
   const [locations, setLocations] = useState<Location[]>([]);
 
   useEffect(() => {
-    console.log(addresses);
     const fetchLocations = async () => {
       try {
         const fetchedLocations = await Promise.all(
@@ -33,7 +26,7 @@ export default function GoogleMaps({ addresses }: { addresses: string[] }) {
     };
 
     fetchLocations();
-  }, []);
+  }, [addresses, apiKey]);
 
   useEffect(() => {
     const initializeMap = async () => {
@@ -45,6 +38,7 @@ export default function GoogleMaps({ addresses }: { addresses: string[] }) {
       });
 
       const { Map } = await loader.importLibrary("maps");
+      const { AdvancedMarkerElement } = (await loader.importLibrary("marker")) as google.maps.MarkerLibrary;
 
       const mapOptions: google.maps.MapOptions = {
         draggable: true,
@@ -55,13 +49,9 @@ export default function GoogleMaps({ addresses }: { addresses: string[] }) {
 
       const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
 
-      const { Marker } = (await loader.importLibrary(
-        "marker"
-      )) as google.maps.MarkerLibrary;
-
       // Loop through the locations and place a marker for each
       locations.forEach((location) => {
-        new Marker({
+        new AdvancedMarkerElement({
           map: map,
           position: location,
         });
