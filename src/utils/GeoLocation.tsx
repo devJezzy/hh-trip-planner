@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Function to format the address parameter
 function formatAddress(address: string): string {
@@ -12,16 +12,19 @@ export default async function getGeocode(address: string, apiKey: string) {
 
   try {
     const response = await axios.get(url);
-    if (response.data.status === 'OK' && response.data.results.length > 0) {
+    if (response.data.status === "OK" && response.data.results.length > 0) {
       const firstResult = response.data.results[0];
       console.log(firstResult["geometry"]["location"]);
       return firstResult["geometry"]["location"];
     } else {
-      console.error('Error:', response.data.error_message || 'No results found.');
+      console.error(
+        "Error:",
+        response.data.error_message || "No results found."
+      );
       return null;
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     return null;
   }
 }

@@ -1,6 +1,6 @@
 // utils/getCityNames.ts
 
-import axios from 'axios';
+import axios from "axios";
 
 interface Feature {
   geometry: {
@@ -32,8 +32,11 @@ interface ApiResponse {
   type: string;
 }
 
-export const getCityNames = async (cityName: string, limit: number = 5): Promise<string[]> => {
-  const baseUrl = 'https://photon.komoot.io/api/';
+export const getCityNames = async (
+  cityName: string,
+  limit: number = 5
+): Promise<string[]> => {
+  const baseUrl = "https://photon.komoot.io/api/";
   try {
     const response = await axios.get<ApiResponse>(baseUrl, {
       params: {
@@ -42,10 +45,12 @@ export const getCityNames = async (cityName: string, limit: number = 5): Promise
       },
     });
 
-    const names = response.data.features.map(feature => feature.properties.name);
+    const names = response.data.features.map(
+      (feature) => feature.properties.name
+    );
     return names;
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error("Error fetching data:", error);
     return [];
   }
 };

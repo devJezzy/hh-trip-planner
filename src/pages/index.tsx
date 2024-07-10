@@ -1,4 +1,3 @@
-
 import router from "next/router";
 import React, { FormEvent, useState } from "react";
 import Select from "react-dropdown-select";
@@ -11,13 +10,6 @@ import ChatBot from "@/components/chatBot";
 import MapComponent from "@/components/GoogleMaps";
 const dancingScript = Dancing_Script({ subsets: ["latin"] });
 
-// type TripCardProps = {
-//   imageSrc: string;
-//   title: string;
-//   days: number;
-//   location: string;
-// };
-
 interface Option {
   label: string;
   value: number;
@@ -27,52 +19,6 @@ interface travelStyleOption {
   label: string;
   value: number;
 }
-
-// const TripCard: React.FC<TripCardProps> = ({
-//   imageSrc,
-//   title,
-//   days,
-//   location,
-// }) => (
-//   <article className="flex flex-col grow justify-center text-sm text-black text-opacity-90">
-//     <div className="flex flex-col py-px bg-white rounded-lg border border-solid border-zinc-100">
-//       <img
-//         loading="lazy"
-//         src={imageSrc}
-//         alt={`Trip to ${location}`}
-//         className="w-fulls"
-//       />
-//       <div className="flex flex-col px-4 py-3 rounded-none">
-//         <h3 className="justify-center leading-6">{title}</h3>
-//         <div className="flex flex-wrap gap-1 pt-2">
-//           <span className="justify-center px-2.5 py-px rounded-full border border-solid bg-neutral-200">
-//             {days} days
-//           </span>
-//           <span className="justify-center px-2.5 py-px rounded-full border border-solid bg-neutral-200">
-//             {location}
-//           </span>
-//         </div>
-//       </div>
-//     </div>
-//   </article>
-// );
-
-// type TripGridProps = {
-//   trips: TripCardProps[];
-// };
-
-// const TripGrid: React.FC<TripGridProps> = ({ trips }) => (
-//   <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-//     {trips.map((trip, index) => (
-//       <div
-//         key={index}
-//         className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full"
-//       >
-//         <TripCard {...trip} />
-//       </div>
-//     ))}
-//   </div>
-// );
 
 const MyComponent: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -144,7 +90,6 @@ const MyComponent: React.FC = () => {
     formData.forEach((value, key) => {
       data[key] = value as string;
     });
-    // console.log("Form data:", data);
     router.push({
       pathname: "/Home",
       query: data,
@@ -164,7 +109,6 @@ const MyComponent: React.FC = () => {
 
   const handleChange = (values: Option[]) => {
     setSelectedValues(values);
-    // console.log("Selected values:", values);
   };
 
   const travelStyleOption: travelStyleOption[] = [
@@ -183,62 +127,60 @@ const MyComponent: React.FC = () => {
   };
 
   const destinationOption: Option[] = [
-    { label: "Kerala", value: 1},
-    { label: "Goa", value: 2},
-    { label: "Himachal", value: 3},
-    { label: "Andaman", value: 4},
-    { label: "Sikkim", value: 5},
-    { label: "Mysore", value: 6},
-    { label: "Kodaikanal", value: 7},
-    { label: "Ooty", value: 8},
-    { label: "Coorg", value: 9},
-    { label: "Yercaud", value: 10},
-    { label: "Delhi", value: 11},
-    { label: "International Destinations", value: 12},
-    { label: "Thailand", value: 13},
-    { label: "Singapore", value: 14},
-    { label: "Srilanka", value: 15},
-    { label: "Europe", value: 16},
-    { label: "Mauritius", value: 17},
-    { label: "Maldives", value: 18},
-    { label: "Malaysia", value: 1},
-    { label: "dubai", value: 19},
-    { label: "Bali", value: 20},
-    { label: "Vietnam", value: 21},
+    { label: "Kerala", value: 1 },
+    { label: "Goa", value: 2 },
+    { label: "Himachal", value: 3 },
+    { label: "Andaman", value: 4 },
+    { label: "Sikkim", value: 5 },
+    { label: "Mysore", value: 6 },
+    { label: "Kodaikanal", value: 7 },
+    { label: "Ooty", value: 8 },
+    { label: "Coorg", value: 9 },
+    { label: "Yercaud", value: 10 },
+    { label: "Delhi", value: 11 },
+    { label: "International Destinations", value: 12 },
+    { label: "Thailand", value: 13 },
+    { label: "Singapore", value: 14 },
+    { label: "Srilanka", value: 15 },
+    { label: "Europe", value: 16 },
+    { label: "Mauritius", value: 17 },
+    { label: "Maldives", value: 18 },
+    { label: "Malaysia", value: 1 },
+    { label: "dubai", value: 19 },
+    { label: "Bali", value: 20 },
+    { label: "Vietnam", value: 21 },
   ];
   const [selectedDestination, setSelectedDestination] = useState<Option[]>([]);
 
   const handleDestinationChange = (values: Option[]) => {
     setSelectedDestination(values);
-    // console.log("Selected values:", values);
   };
   return (
     <div className="flex flex-col w-full">
       <div className="z-10">
-          <ChatBot />
-          </div>
+        <ChatBot />
+      </div>
       <div className="body self-center max-sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] 2xl:w-[40%]">
-      <header 
-          ref={formRef} className="flex flex-col self-center pb-5">
-        <div className="trip-planner-sec px-4 pt-12 max-md:max-w-full">
-          <div className="name-logo-sec flex flex-row">
-            <h1 className="pt-10 text-6xl tracking-tighter max-md:max-w-full max-md:text-4xl">
-              <span className={dancingScript.className}>AI Trip Planner</span>
-            </h1>
-            <Image
-              className="mx-8 max-md:mx-2 max-md:w-25"
-              src="/travel-bot.png"
-              alt="Main"
-              width={150}
-              height={50}
-            />
+        <header ref={formRef} className="flex flex-col self-center pb-5">
+          <div className="trip-planner-sec px-4 pt-12 max-md:max-w-full">
+            <div className="name-logo-sec flex flex-row">
+              <h1 className="pt-10 text-6xl tracking-tighter max-md:max-w-full max-md:text-4xl">
+                <span className={dancingScript.className}>AI Trip Planner</span>
+              </h1>
+              <Image
+                className="mx-8 max-md:mx-2 max-md:w-25"
+                src="/travel-bot.png"
+                alt="Main"
+                width={150}
+                height={50}
+              />
+            </div>
+            <p className="type justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full max-md:text-sm">
+              Plan your dream trip with personalized itineraries.
+            </p>
           </div>
-          <p className="type justify-center text-xl tracking-wide leading-7 text-purple-700 max-md:max-w-full max-md:text-sm">
-            Plan your dream trip with personalized itineraries.
-          </p>
-        </div>
-      </header>
-      <form
+        </header>
+        <form
           onSubmit={handleSubmit}
           className="flex flex-col px-4 pt-10 pb-2 max-w-full"
         >
@@ -321,44 +263,44 @@ const MyComponent: React.FC = () => {
             </div>
           </button>
         </form>
-      <main className="flex flex-col mt-5 p-4">
-        <section className="flex flex-col self-center w-full">
-          <div className="flex flex-col px-12 py-10 bg-white rounded-3xl border border-solid shadow-md max-md:px-5">
-            <h2 className="justify-center items-center px-16 text-3xl leading-9 text-center text-black max-md:px-5">
-              Recently Created Trip Plans
-            </h2>
-            <div className="flex flex-col pt-4 mt-4">
-            {getOtherTourPlan()}
-            </div> 
-          </div>
-        </section>
-        <section className="flex justify-center items-center my-12">
-          <div className="flex gap-5 justify-between max-md:flex-wrap">
-            <div className="flex flex-col pb-2 text-lg leading-7 text-black">
-              <h3 className="justify-center font-semibold">
-                Don&apos;t see the right plan for you?
-              </h3>
-              <p className="justify-center">We&apos;ve got you covered</p>
-            </div>
-            <button
-              onClick={scrollToForm}
-              className="flex flex-col justify-center px-7 py-5 text-xl leading-7 text-center text-white bg-purple-700 rounded-xl border-2 border-gray-900 border-solid max-md:px-5"
-            >
-              <div className="flex flex-col justify-center">
-                <div className="flex gap-1">
-                  <img
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/cc92b9fa58a3189780c02ecd5ba378d4ddc77b410cbf35c9cae6d5e19ded1c4f?apiKey=79050f2e54364c9b998b189296d8e734&"
-                    alt=""
-                    className="shrink-0 my-auto w-5 aspect-square"
-                  />
-                  <span className="justify-center">Tailor your plan</span>
-                </div>
+        <main className="flex flex-col mt-5 p-4">
+          <section className="flex flex-col self-center w-full">
+            <div className="flex flex-col px-12 py-10 bg-white rounded-3xl border border-solid shadow-md max-md:px-5">
+              <h2 className="justify-center items-center px-16 text-3xl leading-9 text-center text-black max-md:px-5">
+                Recently Created Trip Plans
+              </h2>
+              <div className="flex flex-col pt-4 mt-4">
+                {getOtherTourPlan()}
               </div>
-            </button>
-          </div>
-        </section>
-      </main>
+            </div>
+          </section>
+          <section className="flex justify-center items-center my-12">
+            <div className="flex gap-5 justify-between max-md:flex-wrap">
+              <div className="flex flex-col pb-2 text-lg leading-7 text-black">
+                <h3 className="justify-center font-semibold">
+                  Don&apos;t see the right plan for you?
+                </h3>
+                <p className="justify-center">We&apos;ve got you covered</p>
+              </div>
+              <button
+                onClick={scrollToForm}
+                className="flex flex-col justify-center px-7 py-5 text-xl leading-7 text-center text-white bg-purple-700 rounded-xl border-2 border-gray-900 border-solid max-md:px-5"
+              >
+                <div className="flex flex-col justify-center">
+                  <div className="flex gap-1">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/cc92b9fa58a3189780c02ecd5ba378d4ddc77b410cbf35c9cae6d5e19ded1c4f?apiKey=79050f2e54364c9b998b189296d8e734&"
+                      alt=""
+                      className="shrink-0 my-auto w-5 aspect-square"
+                    />
+                    <span className="justify-center">Tailor your plan</span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </section>
+        </main>
       </div>
     </div>
   );

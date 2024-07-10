@@ -6,7 +6,7 @@ type ItineraryItemProps = {
   hasBookTour?: boolean;
   imageSrc?: string;
   name: string;
-  destination : string;
+  destination: string;
 };
 
 const ItineraryItem: React.FC<ItineraryItemProps> = ({
@@ -17,13 +17,19 @@ const ItineraryItem: React.FC<ItineraryItemProps> = ({
   hasBookTour,
   imageSrc,
   name,
-  destination
+  destination,
 }) => {
-  const mapUrl = `https://www.google.com/maps/search/${name.replace(/ /g, "+")}+in+${destination}`;
+  const mapUrl = `https://www.google.com/maps/search/${name.replace(
+    / /g,
+    "+"
+  )}+in+${destination}`;
   return (
     <div className="flex flex-col justify-center mt-3 max-md:max-w-full">
-      <a href={mapUrl}
-                target="_blank" className="flex flex-col justify-center blur-none max-md:max-w-full">
+      <a
+        href={mapUrl}
+        target="_blank"
+        className="flex flex-col justify-center blur-none max-md:max-w-full"
+      >
         <div
           className={`flex ${
             imageSrc ? "gap-2" : ""
@@ -50,9 +56,7 @@ const ItineraryItem: React.FC<ItineraryItemProps> = ({
                   className="w-4 aspect-square"
                 />
               </div>
-              <div
-                className="justify-center text-xl font-medium leading-7 text-gray-900"
-              >
+              <div className="justify-center text-xl font-medium leading-7 text-gray-900">
                 {title}
               </div>
             </div>
