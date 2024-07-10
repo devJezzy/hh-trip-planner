@@ -5,7 +5,7 @@ import {
   Part,
 } from "@google/generative-ai";
 
-const apiKey = "AIzaSyD8gfH9jWohxyvHTcT_Clgp4xHjVBbJlJ0";
+const apiKey = "AIzaSyAv52B3DiFk-tcljQH0vijcN8oTPZqOxsc";
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const sys_prompt = `
@@ -186,7 +186,7 @@ const parts: Part[] = [
 export default async function getChatBotResponse(
   query: string
 ): Promise<string> {
-  const chatSession = await model.startChat({
+  const chatSession = model.startChat({
     generationConfig,
     history: [
       {

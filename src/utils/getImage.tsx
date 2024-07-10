@@ -32,7 +32,7 @@ interface PixabayResponse {
   hits: PixabayImage[];
 }
 
-const API_KEY = "44761113-208b312ff870546ec40cfb95a"; // Replace with your Pixabay API key
+const API_KEY = "44761113-208b312ff870546ec40cfb95a";
 
 async function searchImages(query: string): Promise<PixabayImage[]> {
   try {

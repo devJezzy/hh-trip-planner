@@ -1,11 +1,9 @@
 import axios from "axios";
 
-// Function to format the address parameter
 function formatAddress(address: string): string {
   return encodeURIComponent(address);
 }
 
-// Function to send the request to Google Maps Geocoding API
 export default async function getGeocode(address: string, apiKey: string) {
   const formattedAddress = formatAddress(address);
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${formattedAddress}&key=${apiKey}`;

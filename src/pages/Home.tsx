@@ -131,25 +131,6 @@ const MyComponent: React.FC = () => {
   const handleNavigateBack = () => {
     router.back();
   };
-
-  const default_data: TransformedItineraryDay[] = useMemo(
-    () => [
-      {
-        day: "",
-        items: [
-          {
-            time: "",
-            title: "",
-            description: "",
-            iconSrc: "",
-            imageSrc: "",
-            name: "",
-          },
-        ],
-      },
-    ],
-    []
-  );
   return (
     <div className="flex flex-col justify-center bg-[linear-gradient(0deg,#FFF_0%,#FFF_100%,#FFF)] h-screen">
       {!isLoaded ? (
